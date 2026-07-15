@@ -44,15 +44,19 @@ export function ProjectCard({ project, index = 0, className }: Props) {
         aria-hidden
       />
 
-      <ParallaxImageFrame className="relative aspect-[16/10] border-b border-white/6" intensity={0.7}>
+      <ParallaxImageFrame
+        className="relative aspect-[16/10] border-b border-white/6"
+        intensity={1.15}
+      >
         <Image
           src={project.image}
           alt={title}
           fill
-          className="object-cover"
+          className="object-cover transition duration-700 group-hover:brightness-110"
           sizes="(max-width: 768px) 100vw, 50vw"
+          priority={index < 2}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-card/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent opacity-90" />
       </ParallaxImageFrame>
 
       <div className="relative flex flex-1 flex-col p-5 sm:p-6">

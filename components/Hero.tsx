@@ -2,8 +2,11 @@
 
 import {
   motion,
+  useMotionTemplate,
+  useMotionValue,
   useReducedMotion,
   useScroll,
+  useSpring,
   useTransform,
 } from "framer-motion";
 import { useRef } from "react";
@@ -19,47 +22,108 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
 
-  const yBg = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 140]);
-  const yOrb = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 220]);
-  const yOrb2 = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [40, 280]);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const smoothX = useSpring(mouseX, { stiffness: 60, damping: 18 });
+  const smoothY = useSpring(mouseY, { stiffness: 60, damping: 18 });
+
+  const orbX = useTransform(smoothX, [-0.5, 0.5], reduce ? [0, 0] : [-28, 28]);
+  const orbMouseY = useTransform(
+    smoothY,
+    [-0.5, 0.5],
+    reduce ? [0, 0] : [-18, 18],
+  );
+  const orb2X = useTransform(smoothX, [-0.5, 0.5], reduce ? [0, 0] : [22, -22]);
+  const orb2MouseY = useTransform(
+    smoothY,
+    [-0.5, 0.5],
+    reduce ? [0, 0] : [14, -14],
+  );
+  const titleMouseY = useTransform(
+    smoothY,
+    [-0.5, 0.5],
+    reduce ? [0, 0] : [5, -5],
+  );
+
+  const yBg = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 160]);
+  const yOrbScroll = useTransform(
+    scrollYProgress,
+    [0, 1],
+    reduce ? [0, 0] : [0, 240],
+  );
+  const yOrb2Scroll = useTransform(
+    scrollYProgress,
+    [0, 1],
+    reduce ? [0, 0] : [40, 300],
+  );
+  const yOrb = useTransform(
+    [yOrbScroll, orbMouseY],
+    ([s, m]) => (s as number) + (m as number),
+  );
+  const yOrb2 = useTransform(
+    [yOrb2Scroll, orb2MouseY],
+    ([s, m]) => (s as number) + (m as number),
+  );
+
   const yContent = useTransform(
     scrollYProgress,
     [0, 1],
-    reduce ? [0, 0] : [0, 80],
+    reduce ? [0, 0] : [0, 100],
   );
   const opacity = useTransform(
     scrollYProgress,
-    [0, 0.7],
-    reduce ? [1, 1] : [1, 0.15],
+    [0, 0.75],
+    reduce ? [1, 1] : [1, 0.1],
   );
   const scale = useTransform(
     scrollYProgress,
     [0, 1],
-    reduce ? [1, 1] : [1, 0.96],
+    reduce ? [1, 1] : [1, 0.94],
   );
+  const blur = useTransform(
+    scrollYProgress,
+    [0, 0.8],
+    reduce ? [0, 0] : [0, 6],
+  );
+  const contentFilter = useMotionTemplate`blur(${blur}px)`;
 
   const name = isFa ? site.nameFa : site.name;
   const title = isFa ? site.titleFa : site.title;
+
+  function onPointerMove(e: React.PointerEvent<HTMLElement>) {
+    if (reduce) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    mouseX.set(x);
+    mouseY.set(y);
+  }
+
+  function onPointerLeave() {
+    mouseX.set(0);
+    mouseY.set(0);
+  }
 
   return (
     <section
       id="top"
       ref={ref}
+      onPointerMove={onPointerMove}
+      onPointerLeave={onPointerLeave}
       className="relative min-h-[100svh] overflow-hidden pt-24"
     >
-      {/* Parallax background layers */}
       <motion.div
         style={{ y: yBg }}
         className="pointer-events-none absolute inset-0 gradient-mesh"
         aria-hidden
       />
       <motion.div
-        style={{ y: yOrb }}
+        style={{ y: yOrb, x: orbX }}
         className="pointer-events-none absolute -start-24 top-24 h-72 w-72 rounded-full bg-sky-500/20 blur-3xl sm:h-96 sm:w-96"
         aria-hidden
       />
       <motion.div
-        style={{ y: yOrb2 }}
+        style={{ y: yOrb2, x: orb2X }}
         className="pointer-events-none absolute -end-16 top-40 h-64 w-64 rounded-full bg-violet-500/15 blur-3xl sm:h-80 sm:w-80"
         aria-hidden
       />
@@ -69,7 +133,12 @@ export function Hero() {
       />
 
       <motion.div
-        style={{ y: yContent, opacity, scale }}
+        style={{
+          y: yContent,
+          opacity,
+          scale,
+          filter: reduce ? undefined : contentFilter,
+        }}
         className="relative mx-auto flex min-h-[calc(100svh-6rem)] max-w-6xl flex-col justify-center px-5 pb-24 sm:px-6"
       >
         <motion.p
@@ -86,6 +155,7 @@ export function Hero() {
           initial={reduce ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+          style={{ y: titleMouseY }}
         >
           {name}
         </motion.h1>
@@ -136,7 +206,6 @@ export function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Scroll hint */}
       <motion.div
         className="absolute inset-x-0 bottom-8 flex justify-center"
         initial={{ opacity: 0 }}

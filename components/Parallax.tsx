@@ -63,12 +63,12 @@ export function ParallaxImageFrame({
   const y = useTransform(
     scrollYProgress,
     [0, 1],
-    reduce ? [0, 0] : [18 * intensity, -18 * intensity],
+    reduce ? [0, 0] : [28 * intensity, -28 * intensity],
   );
   const scale = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    reduce ? [1, 1, 1] : [1.06, 1, 1.04],
+    reduce ? [1, 1, 1] : [1.1, 1.02, 1.08],
   );
 
   return (
