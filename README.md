@@ -163,9 +163,9 @@ Open [http://localhost:3000](http://localhost:3000).
 In `content/site.ts`:
 
 ```ts
-email: "hello@youneskazemi.ir",
-telegram: "https://t.me/youneskazemi",
-telegramHandle: "@youneskazemi",
+email: "youneskazemi9798@gmail.com",
+telegram: "https://t.me/younes_kzi",
+telegramHandle: "@younes_kzi",
 ```
 
 ### Add a project
@@ -207,8 +207,8 @@ Remove old A records that still point at previous hosting.
 
 | | |
 |---|---|
-| **Telegram** | [@youneskazemi](https://t.me/youneskazemi) |
-| **Email** | [hello@youneskazemi.ir](mailto:hello@youneskazemi.ir) |
+| **Telegram** | [@younes_kzi](https://t.me/younes_kzi) |
+| **Email** | [youneskazemi9798@gmail.com](mailto:youneskazemi9798@gmail.com) |
 | **Portfolio** | [youneskazemi.vercel.app](https://youneskazemi.vercel.app) |
 
 Available for freelance projects · clear phases · staged delivery.

@@ -4,9 +4,9 @@ export const site = {
   title: "Full-stack Web Developer",
   titleFa: "توسعه‌دهنده فول‌استک وب",
   domain: "youneskazemi.ir",
-  email: "hello@youneskazemi.ir", // TODO: replace with your real email
-  telegram: "https://t.me/youneskazemi", // TODO: replace with your Telegram
-  telegramHandle: "@youneskazemi",
+  email: "youneskazemi9798@gmail.com",
+  telegram: "https://t.me/younes_kzi",
+  telegramHandle: "@younes_kzi",
   location: "Iran",
   locationFa: "ایران",
   languages: ["fa", "en"] as const,
