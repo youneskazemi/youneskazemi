@@ -4,8 +4,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProject, projects } from "@/content/projects";
 import { Footer } from "@/components/Footer";
+import { JsonLd } from "@/components/JsonLd";
 import { Navbar } from "@/components/Navbar";
 import { ProjectDetailContent } from "@/components/ProjectDetailContent";
+import { projectJsonLd, projectMeta } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -17,21 +19,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) {
-    return { title: { absolute: "Project · Younes Kazemi" } };
+    return { title: { absolute: "Younes Kazemi · Project not found" } };
   }
-  // absolute: do NOT use layout template alone (avoids "TickTOM · Younes Kazemi"
-  // looking like the portfolio brand is the client product).
-  return {
-    title: {
-      absolute: `Younes Kazemi · ${project.title}`,
-    },
-    description: project.summary,
-    openGraph: {
-      title: `Younes Kazemi · ${project.title}`,
-      description: project.summary,
-      siteName: "Younes Kazemi",
-    },
-  };
+  return projectMeta(project);
 }
 
 export default async function ProjectPage({ params }: Props) {
@@ -41,6 +31,7 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={projectJsonLd(project)} />
       <div className="noise" aria-hidden />
       <Navbar />
       <main className="flex-1 pt-24">

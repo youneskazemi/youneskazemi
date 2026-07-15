@@ -156,13 +156,20 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ---
 
+## SEO
+
+- Metadata, Open Graph, Twitter cards, JSON-LD (`Person` + `WebSite` + project list)
+- [`/sitemap.xml`](https://youneskazemi.ir/sitemap.xml) · [`/robots.txt`](https://youneskazemi.ir/robots.txt)
+- Canonical URLs under `https://youneskazemi.ir`
+
 ## Customize content
 
 | File | What to edit |
 |------|----------------|
 | [`content/site.ts`](content/site.ts) | Name, email, Telegram, FA/EN copy, skills, services, process, about |
 | [`content/projects.ts`](content/projects.ts) | Project titles, links, tags, summaries, case study body |
-| [`public/projects/`](public/projects/) | Cover images (`latorin.jpg`, `apex78.jpg`, `rimel.jpg`, `gallerychiic.jpg`) |
+| [`public/projects/covers/`](public/projects/covers/) | Polished 16:10 covers from raw screenshots |
+| [`docs/COVER-PROMPT.md`](docs/COVER-PROMPT.md) | Prompts to generate showcase images from full-page PNGs |
 
 ### Contact (update these)
 
