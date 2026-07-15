@@ -80,7 +80,7 @@ export const projects: Project[] = [
     slug: "ticktom",
     title: "TickTOM Universe",
     titleFa: "تیک‌تام یونیورس",
-    href: "https://t.me",
+    href: "https://t.me/TiCkTOM_bot",
     tags: ["Telegram", "Mini App", "Game"],
     summary:
       "Telegram mini-app game — TickTOM Universe loading / cosmos UI with TON branding.",
@@ -145,7 +145,7 @@ export const projects: Project[] = [
     summaryFa:
       "سایت و فروشگاه برند تناسب‌اندام — مکمل، برنامه تمرینی و خدمات باشگاه.",
     image: "/projects/covers/jrfit.jpg",
-    featured: false,
+    featured: true,
     accent: "#3b82f6",
     stack: ["WordPress", "WooCommerce", "Marketing"],
     year: "2024",
@@ -155,9 +155,13 @@ export const projects: Project[] = [
   },
 ];
 
-/** Home “recent work” order (user priority). */
+/**
+ * Display order (home + all work).
+ * User: latorin → jrfit → apex78 → gallerychiic → ticktom → rimelcosmetics → …
+ */
 export const recentSlugs = [
   "latorin",
+  "jrfit",
   "apex78",
   "gallerychiic",
   "ticktom",
@@ -175,6 +179,14 @@ export function getRecentProjects() {
     .filter((p): p is Project => Boolean(p));
 }
 
+/** All projects sorted by `recentSlugs`, then any leftovers. */
+export function getOrderedProjects() {
+  const ordered = getRecentProjects();
+  const seen = new Set(ordered.map((p) => p.slug));
+  const rest = projects.filter((p) => !seen.has(p.slug));
+  return [...ordered, ...rest];
+}
+
 export function getFeaturedProjects() {
-  return projects.filter((p) => p.featured);
+  return getRecentProjects();
 }

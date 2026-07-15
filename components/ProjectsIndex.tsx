@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { projects, type Project } from "@/content/projects";
+import { getOrderedProjects, type Project } from "@/content/projects";
 import { BrowserFrame } from "@/components/BrowserFrame";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
@@ -113,9 +113,10 @@ export function ProjectsIndex() {
   const [filter, setFilter] = useState("all");
   const reduce = useReducedMotion();
 
+  const catalog = useMemo(() => getOrderedProjects(), []);
   const filtered = useMemo(
-    () => projects.filter((p) => matchesFilter(p, filter)),
-    [filter],
+    () => catalog.filter((p) => matchesFilter(p, filter)),
+    [catalog, filter],
   );
 
   return (
