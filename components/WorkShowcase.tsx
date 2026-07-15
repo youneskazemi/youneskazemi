@@ -3,14 +3,24 @@
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { projects, type Project } from "@/content/projects";
+import { getRecentProjects, type Project } from "@/content/projects";
 import { BrowserFrame } from "@/components/BrowserFrame";
 import { useI18n } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
 
 function ExternalIcon() {
   return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
       <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
       <polyline points="15 3 21 3 21 9" />
       <line x1="10" y1="14" x2="21" y2="3" />
@@ -32,7 +42,6 @@ function CaseStudy({
   const title = isFa ? project.titleFa : project.title;
   const summary = isFa ? project.summaryFa : project.summary;
   const num = String(index + 1).padStart(2, "0");
-  // In RTL, "reverse" should flip visual order consistently
   const imageFirst = isFa ? reverse : !reverse;
 
   return (
@@ -43,12 +52,7 @@ function CaseStudy({
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
       className="group relative"
     >
-      <div
-        className={cn(
-          "grid items-center gap-8 lg:grid-cols-12 lg:gap-12 xl:gap-16",
-        )}
-      >
-        {/* Media */}
+      <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-12 xl:gap-16">
         <div
           className={cn(
             "relative lg:col-span-7",
@@ -67,7 +71,10 @@ function CaseStudy({
             className="relative block outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-4 focus-visible:ring-offset-background"
             aria-label={`${title} — ${t.details}`}
           >
-            <BrowserFrame url={project.href} className="transition duration-500 group-hover:-translate-y-1">
+            <BrowserFrame
+              url={project.href}
+              className="transition duration-500 group-hover:-translate-y-1"
+            >
               <div className="relative aspect-[16/10] overflow-hidden bg-[#0c0c12]">
                 <Image
                   src={project.image}
@@ -82,7 +89,6 @@ function CaseStudy({
           </Link>
         </div>
 
-        {/* Copy */}
         <div
           className={cn(
             "flex flex-col lg:col-span-5",
@@ -106,7 +112,7 @@ function CaseStudy({
           <h3 className="text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl">
             <Link
               href={`/projects/${project.slug}`}
-              className="decoration-sky-400/0 underline-offset-4 transition hover:text-white hover:underline hover:decoration-sky-400/50"
+              className="underline-offset-4 transition hover:text-white hover:underline hover:decoration-sky-400/50"
             >
               {title}
             </Link>
@@ -139,21 +145,21 @@ function CaseStudy({
             </a>
             <Link
               href={`/projects/${project.slug}`}
-              className="inline-flex h-12 items-center gap-2 rounded-full border border-white/12 bg-transparent px-5 text-sm font-medium text-zinc-200 transition hover:border-white/25 hover:bg-white/[0.04] hover:text-white"
+              className="inline-flex h-12 items-center gap-2 rounded-full border border-white/12 px-5 text-sm font-medium text-zinc-200 transition hover:border-white/25 hover:bg-white/[0.04] hover:text-white"
             >
               {t.details}
             </Link>
           </div>
         </div>
       </div>
-
     </motion.article>
   );
 }
 
+/** Home: recent work only + link to full catalog. */
 export function WorkShowcase() {
   const { t } = useI18n();
-  const list = projects.filter((p) => p.featured);
+  const list = getRecentProjects();
 
   return (
     <section
@@ -164,21 +170,29 @@ export function WorkShowcase() {
     >
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-6">
         <motion.header
-          className="mb-14 max-w-2xl sm:mb-16 lg:mb-20"
+          className="mb-14 flex max-w-3xl flex-col gap-4 sm:mb-16 lg:mb-20 lg:flex-row lg:items-end lg:justify-between lg:max-w-none"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5 }}
         >
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-sky-400/90">
-            Portfolio
-          </p>
-          <h2 className="text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl">
-            {t.workTitle}
-          </h2>
-          <p className="mt-4 text-base leading-relaxed text-zinc-400 sm:text-lg">
-            {t.workSubtitle}
-          </p>
+          <div className="max-w-2xl">
+            <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-sky-400/90">
+              Portfolio
+            </p>
+            <h2 className="text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl">
+              {t.workTitle}
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-zinc-400 sm:text-lg">
+              {t.workSubtitle}
+            </p>
+          </div>
+          <Link
+            href="/projects"
+            className="inline-flex h-11 shrink-0 items-center justify-center rounded-full border border-white/12 px-5 text-sm font-medium text-zinc-200 transition hover:border-sky-400/40 hover:text-sky-200"
+          >
+            {t.viewAllWork}
+          </Link>
         </motion.header>
 
         <div className="flex flex-col">
@@ -197,6 +211,15 @@ export function WorkShowcase() {
               )}
             </div>
           ))}
+        </div>
+
+        <div className="mt-16 flex justify-center sm:mt-20">
+          <Link
+            href="/projects"
+            className="inline-flex h-12 items-center rounded-full bg-white/[0.06] px-8 text-sm font-semibold text-zinc-100 ring-1 ring-white/10 transition hover:bg-sky-400 hover:text-black hover:ring-sky-400"
+          >
+            {t.viewAllWork}
+          </Link>
         </div>
       </div>
     </section>

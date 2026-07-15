@@ -16,6 +16,7 @@ export type Lang = "fa" | "en";
 
 export const navLinks = [
   { id: "work", href: "/#work", label: "Projects", labelFa: "پروژه‌ها" },
+  { id: "all-work", href: "/projects", label: "All work", labelFa: "همه کارها" },
   { id: "skills", href: "/#skills", label: "Skills", labelFa: "مهارت‌ها" },
   { id: "services", href: "/#services", label: "Services", labelFa: "خدمات" },
   { id: "process", href: "/#process", label: "Process", labelFa: "فرآیند" },
@@ -51,6 +52,12 @@ export const copy = {
     stack: "Stack",
     overview: "Overview",
     notFound: "Project not found",
+    viewAllWork: "View all work",
+    allWorkTitle: "All work",
+    allWorkSubtitle:
+      "Full catalog — shops, platforms, mini apps, and custom products.",
+    filterAll: "All",
+    projectsCount: "projects",
     langToggle: "EN",
     langToggleOther: "FA",
   },
@@ -81,6 +88,12 @@ export const copy = {
     stack: "استک",
     overview: "خلاصه",
     notFound: "پروژه پیدا نشد",
+    viewAllWork: "همه نمونه‌کارها",
+    allWorkTitle: "همه پروژه‌ها",
+    allWorkSubtitle:
+      "کاتالوگ کامل — فروشگاه، پلتفرم، مینی‌اپ و محصول اختصاصی.",
+    filterAll: "همه",
+    projectsCount: "پروژه",
     langToggle: "FA",
     langToggleOther: "EN",
   },

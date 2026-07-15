@@ -34,25 +34,31 @@ export default async function ProjectPage({ params }: Props) {
       <Navbar />
       <main className="flex-1 pt-24">
         <div className="mx-auto max-w-4xl px-5 pb-20 sm:px-6">
-          <div className="relative mb-8 overflow-hidden rounded-2xl border border-white/8">
-            <div className="relative aspect-[16/9]">
+          <div className="relative mb-8 overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/40">
+            <div className="relative aspect-[16/10]">
               <Image
                 src={project.image}
                 alt={project.title}
                 fill
-                className="object-cover"
+                className="object-cover object-top"
                 priority
                 sizes="(max-width: 896px) 100vw, 896px"
               />
             </div>
           </div>
           <ProjectDetailContent project={project} />
-          <div className="mt-10">
+          <div className="mt-10 flex flex-wrap gap-4">
             <Link
-              href="/#work"
+              href="/projects"
               className="text-sm text-zinc-400 transition hover:text-sky-300"
             >
-              ← Home
+              ← All work
+            </Link>
+            <Link
+              href="/#work"
+              className="text-sm text-zinc-500 transition hover:text-sky-300"
+            >
+              Home
             </Link>
           </div>
         </div>
