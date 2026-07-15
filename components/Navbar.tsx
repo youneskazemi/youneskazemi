@@ -3,6 +3,7 @@
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
+import { Logo } from "@/components/Logo";
 import { navLinks, site } from "@/content/site";
 import { useI18n } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
@@ -34,11 +35,10 @@ export function Navbar() {
           href="/#top"
           className="group flex items-center gap-2 text-sm font-semibold tracking-tight text-zinc-50 sm:text-base"
           onClick={() => setOpen(false)}
+          aria-label={brand}
         >
-          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-accent-soft text-xs font-bold text-sky-300 ring-1 ring-sky-400/20 transition group-hover:ring-sky-400/40">
-            YK
-          </span>
-          <span className="hidden sm:inline">{brand}</span>
+          <Logo showWordmark wordmark={brand} className="hidden sm:inline-flex" />
+          <Logo className="sm:hidden" markClassName="h-9 w-9" />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">

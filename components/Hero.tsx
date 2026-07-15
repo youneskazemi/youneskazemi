@@ -108,6 +108,8 @@ export function Hero() {
     <section
       id="top"
       ref={ref}
+      data-snap-section=""
+      data-snap-label="Home"
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
       className="relative min-h-[100svh] overflow-hidden pt-24"

@@ -31,6 +31,11 @@ export const metadata: Metadata = {
     siteName: "Younes Kazemi",
     locale: "fa_IR",
     type: "website",
+    images: [{ url: "/logo-mark.jpg", width: 1024, height: 1024, alt: "YK" }],
+  },
+  icons: {
+    icon: [{ url: "/logo.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/logo-mark.jpg" }],
   },
 };
 

@@ -1,19 +1,19 @@
 "use client";
 
+import { Logo } from "@/components/Logo";
 import { site, navLinks } from "@/content/site";
 import { useI18n } from "@/lib/i18n";
 
 export function Footer() {
   const { t, isFa } = useI18n();
   const year = new Date().getFullYear();
+  const brand = isFa ? site.nameFa : site.name;
 
   return (
     <footer className="border-t border-white/6 bg-black/40">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-5 py-12 sm:px-6 md:flex-row md:items-start md:justify-between">
         <div>
-          <p className="text-sm font-semibold text-zinc-100">
-            {isFa ? site.nameFa : site.name}
-          </p>
+          <Logo showWordmark wordmark={brand} />
           <p className="mt-2 max-w-sm text-sm text-zinc-500">{t.available}</p>
           <p className="mt-4 text-xs text-zinc-600">
             © {year} · {t.footerNote}

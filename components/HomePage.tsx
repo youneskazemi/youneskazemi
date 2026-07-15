@@ -3,6 +3,7 @@
 import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+import { GsapSnapScroll } from "@/components/GsapSnapScroll";
 import { Hero } from "@/components/Hero";
 import { Navbar } from "@/components/Navbar";
 import { Process } from "@/components/Process";
@@ -18,6 +19,7 @@ export function HomePage() {
       <div className="noise" aria-hidden />
       <ScrollProgress />
       <ScrollAmbient />
+      <GsapSnapScroll />
       <div className="relative z-10 flex min-h-full flex-1 flex-col">
         <Navbar />
         <main className="flex-1">
