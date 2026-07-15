@@ -2,24 +2,28 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { projects } from "@/content/projects";
+import { BrowserFrame } from "@/components/BrowserFrame";
 import { useI18n } from "@/lib/i18n";
 
 /**
- * Right-side hero visual: stacked project covers (Awwwards-style composition).
- * Replace any image under public/projects/ anytime.
- * Optional portrait: drop public/hero-portrait.jpg and set USE_PORTRAIT.
+ * Hero visual: single featured project in browser chrome (clean, not stacked mess).
+ * Optional portrait: public/hero-portrait.jpg + USE_PORTRAIT = true
  */
-const USE_PORTRAIT = false; // set true when you add public/hero-portrait.jpg
+const USE_PORTRAIT = false;
 
 export function HeroVisual() {
   const reduce = useReducedMotion();
-  const { isFa } = useI18n();
-  const covers = projects.filter((p) => p.featured).slice(0, 3);
+  const { isFa, t } = useI18n();
+  const lead = projects.find((p) => p.featured) ?? projects[0];
+  if (!lead) return null;
+
+  const title = isFa ? lead.titleFa : lead.title;
 
   if (USE_PORTRAIT) {
     return (
-      <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-3xl border border-white/10 bg-card shadow-2xl shadow-sky-500/10">
+      <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-2xl border border-white/10 bg-card">
         <Image
           src="/hero-portrait.jpg"
           alt={isFa ? "سیدیونس کاظمی" : "Younes Kazemi"}
@@ -28,89 +32,52 @@ export function HeroVisual() {
           sizes="(max-width: 1024px) 90vw, 420px"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
       </div>
     );
   }
 
   return (
-    <div className="relative mx-auto h-[min(52vh,420px)] w-full max-w-md lg:h-[min(58vh,480px)]">
-      {/* ambient glow behind stack */}
+    <motion.div
+      className="relative mx-auto w-full max-w-lg"
+      initial={reduce ? false : { opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+    >
       <div
-        className="pointer-events-none absolute inset-8 rounded-full bg-sky-500/15 blur-3xl"
+        className="pointer-events-none absolute -inset-6 rounded-full bg-sky-500/10 blur-3xl"
         aria-hidden
       />
 
-      {covers.map((project, i) => {
-        const title = isFa ? project.titleFa : project.title;
-        // stack: back → front, slight offset & rotate
-        const layers = [
-          { x: isFa ? 28 : -28, y: 36, r: isFa ? -8 : 8, z: 10, s: 0.9 },
-          { x: isFa ? -20 : 20, y: 16, r: isFa ? 6 : -6, z: 20, s: 0.95 },
-          { x: 0, y: 0, r: isFa ? -2 : 2, z: 30, s: 1 },
-        ][i] ?? { x: 0, y: 0, r: 0, z: 10, s: 1 };
-
-        return (
-          <motion.div
-            key={project.slug}
-            className="absolute inset-x-6 top-4 overflow-hidden rounded-2xl border border-white/10 bg-card shadow-xl shadow-black/40"
-            style={{
-              zIndex: layers.z,
-              aspectRatio: "16 / 10",
-            }}
-            initial={
-              reduce
-                ? false
-                : { opacity: 0, y: 40, rotate: layers.r + 4, scale: 0.92 }
-            }
-            animate={{
-              opacity: 1,
-              y: layers.y,
-              x: layers.x,
-              rotate: layers.r,
-              scale: layers.s,
-            }}
-            transition={{
-              duration: 0.7,
-              delay: 0.15 + i * 0.1,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            whileHover={
-              reduce
-                ? undefined
-                : { y: layers.y - 8, scale: layers.s * 1.02, zIndex: 40 }
-            }
-          >
+      <Link
+        href={`/projects/${lead.slug}`}
+        className="group relative block outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      >
+        <BrowserFrame url={lead.href}>
+          <div className="relative aspect-[16/10] overflow-hidden bg-zinc-900">
             <Image
-              src={project.image}
+              src={lead.image}
               alt={title}
               fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 80vw, 400px"
-              priority={i === 2}
+              className="object-cover transition duration-500 group-hover:scale-[1.02]"
+              sizes="(max-width: 1024px) 90vw, 480px"
+              priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
-              <p className="text-xs font-medium text-white/90 sm:text-sm">
-                {title}
-              </p>
-              <p className="mt-0.5 text-[10px] text-white/55 sm:text-xs">
-                {project.tags.slice(0, 2).join(" · ")}
-              </p>
-            </div>
-          </motion.div>
-        );
-      })}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+          </div>
+        </BrowserFrame>
 
-      {/* floating badge */}
-      <motion.div
-        className="absolute bottom-2 start-2 z-40 rounded-full border border-white/10 bg-black/60 px-3 py-1.5 text-[11px] text-sky-200 backdrop-blur-md sm:start-0"
-        initial={reduce ? false : { opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.55 }}
-      >
-        {isFa ? "۴ پروژه منتخب" : "4 featured projects"}
-      </motion.div>
-    </div>
+        <div className="mt-4 flex items-center justify-between gap-3 px-1">
+          <div>
+            <p className="text-sm font-medium text-zinc-100">{title}</p>
+            <p className="text-xs text-zinc-500">
+              {lead.tags.slice(0, 2).join(" · ")}
+            </p>
+          </div>
+          <span className="shrink-0 text-xs font-medium text-sky-300 transition group-hover:text-sky-200">
+            {t.details} →
+          </span>
+        </div>
+      </Link>
+    </motion.div>
   );
 }
