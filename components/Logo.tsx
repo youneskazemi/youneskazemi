@@ -1,3 +1,5 @@
+"use client";
+
 import { useId } from "react";
 import { cn } from "@/lib/cn";
 
@@ -8,7 +10,10 @@ type LogoProps = {
   wordmark?: string;
 };
 
-/** YK monogram — geometric mark (Dribbble monogram / Awwwards-minimal brand mark). */
+/**
+ * YK monogram — minimal geometric (hand-drawn SVG, not AI raster).
+ * Built for 16–36px nav/favicon clarity: open counters, equal stroke, no clutter.
+ */
 export function Logo({
   className,
   markClassName,
@@ -16,73 +21,73 @@ export function Logo({
   wordmark,
 }: LogoProps) {
   const uid = useId().replace(/:/g, "");
-  const gradId = `yk-grad-${uid}`;
+  const gradId = `yk-${uid}`;
 
   return (
     <span className={cn("inline-flex items-center gap-2.5", className)}>
       <span
         className={cn(
-          "relative inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl",
-          "bg-gradient-to-br from-sky-400/20 via-zinc-900 to-zinc-950",
-          "ring-1 ring-sky-400/30 shadow-[0_0_24px_-6px_rgba(56,189,248,0.55)]",
-          "transition duration-300 group-hover:ring-sky-400/55 group-hover:shadow-[0_0_28px_-4px_rgba(56,189,248,0.7)]",
+          "relative inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-[10px]",
+          "bg-[#0b0f14] ring-1 ring-sky-400/35",
+          "transition duration-300 group-hover:ring-sky-400/60",
           markClassName,
         )}
         aria-hidden
       >
         <svg
-          viewBox="0 0 40 40"
-          className="h-[22px] w-[22px]"
+          viewBox="0 0 32 32"
+          className="h-5 w-5"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
+          {/* Y */}
           <path
-            d="M11 9 L16.5 18.5 V31"
+            d="M7 7 L12 15 V25"
             stroke={`url(#${gradId})`}
-            strokeWidth="2.6"
+            strokeWidth="2.4"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
-            d="M22 9 L16.5 18.5"
+            d="M17 7 L12 15"
             stroke={`url(#${gradId})`}
-            strokeWidth="2.6"
+            strokeWidth="2.4"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
+          {/* K — shares the vertical visual weight on the right */}
           <path
-            d="M24.5 9 V31"
+            d="M19.5 7 V25"
             stroke="#7dd3fc"
-            strokeWidth="2.6"
+            strokeWidth="2.4"
             strokeLinecap="round"
           />
           <path
-            d="M24.5 19.5 L31 9"
+            d="M19.5 15.5 L26 7"
             stroke="#38bdf8"
-            strokeWidth="2.6"
+            strokeWidth="2.4"
             strokeLinecap="round"
           />
           <path
-            d="M24.5 19.5 L31 31"
+            d="M19.5 15.5 L26 25"
             stroke="#38bdf8"
-            strokeWidth="2.6"
+            strokeWidth="2.4"
             strokeLinecap="round"
           />
           <defs>
             <linearGradient
               id={gradId}
-              x1="11"
-              y1="9"
-              x2="22"
-              y2="31"
+              x1="7"
+              y1="7"
+              x2="17"
+              y2="25"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stopColor="#7dd3fc" />
+              <stop stopColor="#bae6fd" />
               <stop offset="1" stopColor="#38bdf8" />
             </linearGradient>
           </defs>
         </svg>
-        <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(125,211,252,0.25),transparent_55%)]" />
       </span>
       {showWordmark && wordmark ? (
         <span className="text-sm font-semibold tracking-tight text-zinc-50 sm:text-base">
