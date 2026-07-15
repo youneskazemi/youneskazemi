@@ -7,6 +7,7 @@ OUT.mkdir(parents=True, exist_ok=True)
 
 jobs = [
     ("latorin.png", "latorin", "hero"),
+    ("apex78.png", "apex78", "hero"),
     ("rimelcosmetics.png", "rimelcosmetics", "hero"),
     ("gallerychiic.png", "gallerychiic", "hero"),
     ("jrfit.png", "jrfit", "hero"),

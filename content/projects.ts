@@ -48,7 +48,7 @@ export const projects: Project[] = [
     tags: ["Web", "Association", "Content"],
     summary: "Wealth Architects Association — professional web presence.",
     summaryFa: "انجمن معماران ثروت — حضور وب حرفه‌ای.",
-    image: "/projects/apex78.jpg",
+    image: "/projects/covers/apex78.jpg",
     featured: true,
     accent: "#a78bfa",
     stack: ["Web", "Content site"],
