@@ -37,8 +37,8 @@ export function Navbar() {
           onClick={() => setOpen(false)}
           aria-label={brand}
         >
-          <Logo showWordmark wordmark={brand} className="hidden sm:inline-flex" />
-          <Logo className="sm:hidden" markClassName="h-9 w-9" />
+          <Logo showWordmark wordmark={brand} size="md" className="hidden sm:inline-flex" />
+          <Logo size="md" className="sm:hidden" />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">

@@ -1,17 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
-  <rect width="128" height="128" rx="28" fill="#0b0f14"/>
-  <rect x="1.5" y="1.5" width="125" height="125" rx="26.5" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="3"/>
-  <!-- Y -->
-  <path d="M28 28 L52 62 V100" stroke="url(#g)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M72 28 L52 62" stroke="url(#g)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- K -->
-  <path d="M80 28 V100" stroke="#7dd3fc" stroke-width="10" stroke-linecap="round"/>
-  <path d="M80 62 L104 28" stroke="#38bdf8" stroke-width="10" stroke-linecap="round"/>
-  <path d="M80 62 L104 100" stroke="#38bdf8" stroke-width="10" stroke-linecap="round"/>
-  <defs>
-    <linearGradient id="g" x1="28" y1="28" x2="72" y2="100" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#bae6fd"/>
-      <stop offset="1" stop-color="#38bdf8"/>
-    </linearGradient>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="8" fill="#070a0e"/>
+  <rect x="0.75" y="0.75" width="30.5" height="30.5" rx="7.25" fill="none" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.5"/>
+  <path d="M7 7 L12.5 15.5 V25" fill="none" stroke="#7dd3fc" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M18 7 L12.5 15.5" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M19.5 7 V25" fill="none" stroke="#7dd3fc" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M19.5 15.5 L25.5 7" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M19.5 15.5 L25.5 25" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
 </svg>

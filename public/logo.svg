@@ -1,16 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
-  <rect width="128" height="128" rx="28" fill="#0b0f14"/>
-  <rect x="1.5" y="1.5" width="125" height="125" rx="26.5" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="YK">
+  <rect width="128" height="128" rx="28" fill="#070a0e"/>
+  <rect x="2" y="2" width="124" height="124" rx="26" fill="none" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="3"/>
+  <path d="M8 8h16v16H8z" fill="none" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="3"/>
   <!-- Y -->
-  <path d="M28 28 L52 62 V100" stroke="url(#g)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M72 28 L52 62" stroke="url(#g)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M28 30 L52 60 V98" fill="none" stroke="url(#g)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M76 30 L52 60" fill="none" stroke="url(#g)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
   <!-- K -->
-  <path d="M80 28 V100" stroke="#7dd3fc" stroke-width="10" stroke-linecap="round"/>
-  <path d="M80 62 L104 28" stroke="#38bdf8" stroke-width="10" stroke-linecap="round"/>
-  <path d="M80 62 L104 100" stroke="#38bdf8" stroke-width="10" stroke-linecap="round"/>
+  <path d="M80 30 V98" fill="none" stroke="#7dd3fc" stroke-width="11" stroke-linecap="round"/>
+  <path d="M80 62 L104 30" fill="none" stroke="#38bdf8" stroke-width="11" stroke-linecap="round"/>
+  <path d="M80 62 L104 98" fill="none" stroke="#38bdf8" stroke-width="11" stroke-linecap="round"/>
   <defs>
-    <linearGradient id="g" x1="28" y1="28" x2="72" y2="100" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#bae6fd"/>
+    <linearGradient id="g" x1="28" y1="30" x2="76" y2="98" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#e0f2fe"/>
       <stop offset="1" stop-color="#38bdf8"/>
     </linearGradient>
   </defs>

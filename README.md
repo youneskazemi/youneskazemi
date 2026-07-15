@@ -30,8 +30,10 @@
 Personal freelance portfolio for **Younes Kazemi (سیدیونس کاظمی)** — built to showcase real client work and convert visitors from Karlancer / direct outreach into phased projects.
 
 <p align="center">
-  <img src="public/logo.svg" alt="YK logo" width="72" height="72" />
+  <img src="public/logo.svg" alt="YK monogram logo" width="80" height="80" />
 </p>
+
+**Brand mark:** geometric **YK** monogram (SVG) — sky cyan on dark. Used in nav, favicon (`app/icon.svg`), and Open Graph card.
 
 | | |
 |---|---|
