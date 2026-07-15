@@ -1,0 +1,45 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+import type { ReactNode } from "react";
+import { cn } from "@/lib/cn";
+
+type SectionProps = {
+  id?: string;
+  children: ReactNode;
+  className?: string;
+  title?: string;
+  subtitle?: string;
+};
+
+export function Section({ id, children, className, title, subtitle }: SectionProps) {
+  const reduce = useReducedMotion();
+
+  return (
+    <section id={id} className={cn("section-pad scroll-mt-24", className)}>
+      <div className="mx-auto w-full max-w-6xl px-5 sm:px-6">
+        {(title || subtitle) && (
+          <motion.div
+            className="mb-10 max-w-2xl sm:mb-12"
+            initial={reduce ? false : { opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {title && (
+              <h2 className="text-2xl font-semibold tracking-tight text-zinc-50 sm:text-3xl">
+                {title}
+              </h2>
+            )}
+            {subtitle && (
+              <p className="mt-3 text-base leading-relaxed text-zinc-400 sm:text-lg">
+                {subtitle}
+              </p>
+            )}
+          </motion.div>
+        )}
+        {children}
+      </div>
+    </section>
+  );
+}
