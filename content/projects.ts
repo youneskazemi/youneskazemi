@@ -78,22 +78,22 @@ export const projects: Project[] = [
   },
   {
     slug: "ticktom",
-    title: "TickTOM Universe",
-    titleFa: "تیک‌تام یونیورس",
+    title: "TickTOM",
+    titleFa: "تیک‌تام",
     href: "https://t.me/TiCkTOM_bot",
     tags: ["Telegram", "Mini App", "Game"],
     summary:
-      "Telegram mini-app game — TickTOM Universe loading / cosmos UI with TON branding.",
+      "Telegram mini-app game (TickTOM Universe) — cosmos UI with TON branding.",
     summaryFa:
-      "بازی مینی‌اپ تلگرام — رابط TickTOM Universe با تم فضایی و برند TON.",
+      "بازی مینی‌اپ تلگرام (TickTOM Universe) — رابط فضایی با برند TON.",
     image: "/projects/covers/ticktom.jpg",
     featured: true,
     accent: "#f59e0b",
     stack: ["Telegram Mini App", "WebApp", "TON"],
     year: "2025",
-    body: "TickTOM Universe is a Telegram mini-app game experience: dark cosmos aesthetic, character hero screen, and asset loading flow for an in-messenger product.",
+    body: "TickTOM is a Telegram mini-app game (TickTOM Universe): dark cosmos aesthetic, character hero screen, and asset loading flow for an in-messenger product.",
     bodyFa:
-      "تیک‌تام یونیورس تجربه بازی مینی‌اپ تلگرام است: زیبایی‌شناسی کیهانی تیره، صفحه هیرو کاراکتر، و جریان لود دارایی داخل مسنجر.",
+      "تیک‌تام بازی مینی‌اپ تلگرام (TickTOM Universe) است: زیبایی‌شناسی کیهانی تیره، صفحه هیرو کاراکتر، و جریان لود دارایی داخل مسنجر.",
   },
   {
     slug: "rimelcosmetics",

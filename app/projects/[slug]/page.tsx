@@ -16,10 +16,21 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const project = getProject(slug);
-  if (!project) return { title: "Project" };
+  if (!project) {
+    return { title: { absolute: "Project · Younes Kazemi" } };
+  }
+  // absolute: do NOT use layout template alone (avoids "TickTOM · Younes Kazemi"
+  // looking like the portfolio brand is the client product).
   return {
-    title: project.title,
+    title: {
+      absolute: `Younes Kazemi · ${project.title}`,
+    },
     description: project.summary,
+    openGraph: {
+      title: `Younes Kazemi · ${project.title}`,
+      description: project.summary,
+      siteName: "Younes Kazemi",
+    },
   };
 }
 

@@ -2,9 +2,15 @@ import type { Metadata } from "next";
 import { ProjectsIndex } from "@/components/ProjectsIndex";
 
 export const metadata: Metadata = {
-  title: "All work",
+  title: {
+    absolute: "Younes Kazemi · All work",
+  },
   description:
-    "Full portfolio — Latorin, Apex78, Gallery Chiic, TickTOM, Rimel Cosmetics, Rayan AI, and more.",
+    "Full portfolio by Younes Kazemi — Latorin, JR Fit, Apex78, Gallery Chiic, TickTOM, Rimel Cosmetics, Rayan AI, and more.",
+  openGraph: {
+    title: "Younes Kazemi · All work",
+    siteName: "Younes Kazemi",
+  },
 };
 
 export default function ProjectsPage() {

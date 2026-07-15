@@ -18,8 +18,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: {
     default: "Younes Kazemi · Full-stack Web Developer",
-    template: "%s · Younes Kazemi",
+    // Prefer absolute titles on nested pages so client brands never look like the site name.
+    template: "%s",
   },
+  applicationName: "Younes Kazemi",
   description:
     "Full-stack developer — WordPress shops & custom Next.js/Django products. سیدیونس کاظمی، توسعه‌دهنده فول‌استک وب.",
   metadataBase: new URL("https://youneskazemi.ir"),
