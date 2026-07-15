@@ -118,7 +118,7 @@ export const projects: Project[] = [
     slug: "rayan-ai",
     title: "Rayan AI",
     titleFa: "رایان هوش مصنوعی",
-    href: "https://rayanai.ir",
+    href: "https://rayanai.io",
     tags: ["AI", "SaaS", "Custom"],
     summary:
       "Persian AI tools platform — search, voice-to-notes, text gen, and utilities.",
