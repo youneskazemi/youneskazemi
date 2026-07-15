@@ -22,17 +22,13 @@
   --font-sans: var(--font-vazirmatn), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
-/* CSS smooth scroll off by default — GSAP snap owns scroll on desktop.
-   Keep native smooth for reduced-motion users who skip GSAP. */
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: auto;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
   }
 }
 
