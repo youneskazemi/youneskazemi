@@ -15,12 +15,12 @@ export const site = {
 export type Lang = "fa" | "en";
 
 export const navLinks = [
-  { id: "work", href: "#work", label: "Projects", labelFa: "پروژه‌ها" },
-  { id: "skills", href: "#skills", label: "Skills", labelFa: "مهارت‌ها" },
-  { id: "services", href: "#services", label: "Services", labelFa: "خدمات" },
-  { id: "process", href: "#process", label: "Process", labelFa: "فرآیند" },
-  { id: "about", href: "#about", label: "About", labelFa: "درباره" },
-  { id: "contact", href: "#contact", label: "Contact", labelFa: "تماس" },
+  { id: "work", href: "/#work", label: "Projects", labelFa: "پروژه‌ها" },
+  { id: "skills", href: "/#skills", label: "Skills", labelFa: "مهارت‌ها" },
+  { id: "services", href: "/#services", label: "Services", labelFa: "خدمات" },
+  { id: "process", href: "/#process", label: "Process", labelFa: "فرآیند" },
+  { id: "about", href: "/#about", label: "About", labelFa: "درباره" },
+  { id: "contact", href: "/#contact", label: "Contact", labelFa: "تماس" },
 ] as const;
 
 export const copy = {

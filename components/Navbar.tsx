@@ -64,7 +64,7 @@ export function Navbar() {
           </button>
 
           <a
-            href="#contact"
+            href="/#contact"
             className="hidden rounded-full bg-sky-400 px-4 py-2 text-sm font-medium text-zinc-950 transition hover:bg-sky-300 sm:inline-flex"
           >
             {t.ctaContact}
@@ -120,7 +120,7 @@ export function Navbar() {
               </a>
             ))}
             <a
-              href="#contact"
+              href="/#contact"
               className="mt-2 rounded-xl bg-sky-400 px-3 py-3 text-center text-sm font-medium text-zinc-950"
               onClick={() => setOpen(false)}
             >
