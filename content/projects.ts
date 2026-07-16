@@ -157,7 +157,7 @@ export const projects: Project[] = [
     slug: "jrfit",
     title: "JR Fit",
     titleFa: "جی‌آر فیت",
-    href: "https://jrfit.com",
+    href: "https://jrfit.ir",
     tags: ["WordPress", "Fitness", "Store"],
     summary:
       "Fitness brand site & shop — supplements, programs, and gym services.",
