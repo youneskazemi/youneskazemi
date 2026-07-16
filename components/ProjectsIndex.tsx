@@ -16,6 +16,7 @@ const FILTERS = [
   { id: "store", label: "Store", labelFa: "فروشگاه", match: /Store|Woo|Shop|Beauty|Fitness|Lifestyle/i },
   { id: "custom", label: "Custom / AI", labelFa: "اختصاصی / AI", match: /Custom|AI|SaaS|EdTech|Platform/i },
   { id: "telegram", label: "Telegram", labelFa: "تلگرام", match: /Telegram|Mini App|Game/i },
+  { id: "web3", label: "Web3 / DeFi", labelFa: "وب۳ / دیفای", match: /DeFi|Web3|dApp|DEX|BSC/i },
   { id: "web", label: "Web", labelFa: "وب", match: /Web|Association|Content/i },
 ] as const;
 

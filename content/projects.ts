@@ -133,7 +133,26 @@ export const projects: Project[] = [
     bodyFa:
       "رایان AI محصولی با حس SaaS تیره برای کاربران فارسی است: جستجوی پیشرفته، ویس به جزوه، تولید متن و ابزارهای کاربردی با شبکه ابزار تمیز.",
   },
-  // Extra from raw folder — not in “recent six” but available on All works
+  {
+    slug: "cadinu",
+    title: "Cadinu Apps",
+    titleFa: "کادینو اپس",
+    href: "https://apps.cadinu.io/",
+    tags: ["DeFi", "Web3", "dApp"],
+    summary:
+      "CadinuSwap ecosystem — MultiSwap, farms, staking, lottery, NFT referral, and governance.",
+    summaryFa:
+      "اکوسیستم CadinuSwap — MultiSwap، فارم، استیکینگ، لاتاری، NFT و حاکمیت.",
+    image: "/projects/covers/cadinu.jpg",
+    featured: true,
+    accent: "#6366f1",
+    stack: ["React / Next", "Web3", "BSC", "DEX"],
+    year: "2024",
+    body: "Cadinu Apps (apps.cadinu.io) is a multi-module DeFi dApp hub: token swap, liquidity farming, staking pools, lottery, NFT referral, lock tools, trading competition, and community governance — multi-language wallet-connected UI for the CADINU ecosystem.",
+    bodyFa:
+      "اپ‌های کادینو (apps.cadinu.io) هاب dApp چندماژوله دیفای است: سواپ، فارم نقدینگی، استیکینگ، لاتاری، معرفی NFT، ابزار قفل، رقابت ترید و حاکمیت جامعه — رابط چندزبانه با اتصال کیف‌پول برای اکوسیستم CADINU.",
+  },
+  // Extra from raw folder
   {
     slug: "jrfit",
     title: "JR Fit",
@@ -167,6 +186,7 @@ export const recentSlugs = [
   "ticktom",
   "rimelcosmetics",
   "rayan-ai",
+  "cadinu",
 ] as const;
 
 /** How many case studies to show on the landing page before “View all”. */

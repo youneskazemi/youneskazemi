@@ -18,6 +18,8 @@ jobs = [
     ("rayan_ai.png", "rayan-ai", "browser", (96, 165, 250)),
     ("rimelcosmetics.png", "rimelcosmetics", "browser", (190, 24, 93)),
     ("ticktom.png", "ticktom", "phone", (245, 158, 11)),
+    ("cadinu.png", "cadinu", "browser", (99, 102, 241)),
+    ("cadinu-viewport.png", "cadinu", "browser", (99, 102, 241)),  # fallback overwrite with viewport if better
 ]
 
 def crop_hero(im: Image.Image, ratio=16 / 10) -> Image.Image:
