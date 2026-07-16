@@ -172,6 +172,25 @@ export const projects: Project[] = [
     bodyFa:
       "جی‌آر فیت فروشگاه مکمل ورزشی را با برنامه تمرینی و استوری برند روی UI تیره و پرانرژی ترکیب می‌کند.",
   },
+  {
+    slug: "avcafebakery",
+    title: "AV Cafe Bakery",
+    titleFa: "کافه بیکری AV",
+    href: "https://avcafebakery.vercel.app/",
+    tags: ["Web", "Cafe", "Local"],
+    summary:
+      "Shiraz cafe-bakery site — FA-first menu, events, and visit info with warm brick branding.",
+    summaryFa:
+      "سایت کافه بیکری شیراز — منوی فارسی، برنامه‌ها و اطلاعات مراجعه با برند گرم آجری.",
+    image: "/projects/covers/avcafebakery.jpg",
+    featured: true,
+    accent: "#b45309",
+    stack: ["Next.js", "Tailwind", "RTL / FA-first"],
+    year: "2026",
+    body: "AV Cafe Bakery is a single-page brand site for a Shiraz cafe-bakery (Behesht Blvd): hero storytelling, hot/cold drinks and bakery menu with prices, upcoming events, hours, map, and Instagram CTAs — cream-and-brick palette, Vazirmatn + display type, mobile-first takeaway positioning.",
+    bodyFa:
+      "کافه بیکری AV سایت یک‌صفحه‌ای برند برای کافه بیکری شیراز (بلوار بهشت) است: هیرو داستانی، منوی نوشیدنی گرم/خنک و بیکری با قیمت، برنامه‌ها، ساعت کار، نقشه و CTA اینستاگرام — پالت کرم و آجری، Vazirmatn + فونت نمایشی، و موقعیت تیک‌اوی موبایل‌فرست.",
+  },
 ];
 
 /**
@@ -181,6 +200,7 @@ export const projects: Project[] = [
 export const recentSlugs = [
   "latorin",
   "jrfit",
+  "avcafebakery",
   "apex78",
   "gallerychiic",
   "ticktom",

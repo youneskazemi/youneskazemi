@@ -20,6 +20,7 @@ jobs = [
     ("ticktom.png", "ticktom", "phone", (245, 158, 11)),
     ("cadinu.png", "cadinu", "browser", (99, 102, 241)),
     ("cadinu-viewport.png", "cadinu", "browser", (99, 102, 241)),  # fallback overwrite with viewport if better
+    ("avcafebakery.png", "avcafebakery", "browser", (180, 83, 9)),
 ]
 
 def crop_hero(im: Image.Image, ratio=16 / 10) -> Image.Image:

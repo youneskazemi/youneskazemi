@@ -64,6 +64,7 @@ Catalog order (home showcase = first **3**):
 |---------|------|------|
 | **[Latorin](https://latorin.ir)** | Custom web / platform | [latorin.ir](https://latorin.ir) |
 | **[JR Fit](https://jrfit.ir)** | WordPress · fitness store | [jrfit.ir](https://jrfit.ir) |
+| **[AV Cafe Bakery](https://avcafebakery.vercel.app/)** | Cafe / bakery brand site (FA) | [avcafebakery.vercel.app](https://avcafebakery.vercel.app/) |
 | **[Apex78](https://apex78.org)** | Association / content | [apex78.org](https://apex78.org) |
 | **[Gallery Chiic](https://gallerychiic.com)** | Gallery / storefront | [gallerychiic.com](https://gallerychiic.com) |
 | **[TickTOM](https://t.me/TiCkTOM_bot)** | Telegram mini app / game | [t.me/TiCkTOM_bot](https://t.me/TiCkTOM_bot) |
