@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { ProjectsIndex } from "@/components/ProjectsIndex";
 import { site } from "@/content/site";
-import { absoluteUrl, defaultTitle } from "@/lib/seo";
+import { absoluteUrl } from "@/lib/seo";
 
-const title = `${site.name} · All work`;
+const title = `${site.nameFa} · همه نمونه‌کارها`;
 const description =
-  "Full portfolio by Younes Kazemi (سیدیونس کاظمی): Latorin, JR Fit, Apex78, Gallery Chiic, TickTOM, Rimel Cosmetics, Rayan AI — WordPress shops, custom Next.js, Telegram mini apps.";
+  "نمونه کارهای سیدیونس کاظمی: لاتورین، جی‌آر فیت، اپکس ۷۸، گالری شیک، تیک‌تام، ریمل، رایان AI، کادینو — فروشگاه WordPress، Next.js و وب۳.";
 
 export const metadata: Metadata = {
   title: { absolute: title },
@@ -16,14 +16,15 @@ export const metadata: Metadata = {
     url: absoluteUrl("/projects"),
     title,
     description,
-    siteName: site.name,
+    siteName: site.nameFa,
     locale: "fa_IR",
     images: [
       {
-        url: "/opengraph-image",
+        url: "/og.png",
         width: 1200,
         height: 630,
-        alt: defaultTitle,
+        alt: title,
+        type: "image/png",
       },
     ],
   },
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["/opengraph-image"],
+    images: ["/og.png"],
   },
   robots: { index: true, follow: true },
 };

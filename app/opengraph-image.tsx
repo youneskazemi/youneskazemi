@@ -1,12 +1,33 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Younes Kazemi — Full-stack Web Developer";
+export const alt = "سیدیونس کاظمی · توسعه‌دهنده فول‌استک وب";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-/** Clean OG card — monogram + name (no AI logo raster). */
-export default function OpenGraphImage() {
+/** FA-first share card — bright gradient (not empty black). */
+export default async function OpenGraphImage() {
+  // Vazirmatn supports Persian in OG ImageResponse
+  let fontData: ArrayBuffer | null = null;
+  try {
+    fontData = await fetch(
+      "https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/ttf/Vazirmatn-Bold.ttf",
+    ).then((r) => r.arrayBuffer());
+  } catch {
+    fontData = null;
+  }
+
+  const fonts = fontData
+    ? [
+        {
+          name: "Vazirmatn",
+          data: fontData,
+          style: "normal" as const,
+          weight: 700 as const,
+        },
+      ]
+    : [];
+
   return new ImageResponse(
     (
       <div
@@ -16,32 +37,60 @@ export default function OpenGraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#050508",
-          padding: 64,
-          fontFamily: "system-ui, sans-serif",
+          padding: 56,
+          background:
+            "linear-gradient(135deg, #0c4a6e 0%, #0f172a 42%, #020617 100%)",
+          fontFamily: fontData ? "Vazirmatn" : "sans-serif",
+          position: "relative",
         }}
       >
+        {/* decorative orbs (Satori-friendly solid circles) */}
+        <div
+          style={{
+            position: "absolute",
+            top: -80,
+            right: -40,
+            width: 360,
+            height: 360,
+            borderRadius: 999,
+            background: "rgba(56, 189, 248, 0.35)",
+            display: "flex",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: -100,
+            left: -60,
+            width: 320,
+            height: 320,
+            borderRadius: 999,
+            background: "rgba(167, 139, 250, 0.28)",
+            display: "flex",
+          }}
+        />
+
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 20,
+            gap: 22,
+            zIndex: 1,
           }}
         >
           <div
             style={{
-              width: 72,
-              height: 72,
-              borderRadius: 18,
-              background: "#070a0e",
-              border: "2px solid rgba(56,189,248,0.45)",
+              width: 88,
+              height: 88,
+              borderRadius: 22,
+              background: "#0b1220",
+              border: "3px solid #38bdf8",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "#38bdf8",
-              fontSize: 28,
+              color: "#7dd3fc",
+              fontSize: 34,
               fontWeight: 700,
-              letterSpacing: -1,
             }}
           >
             YK
@@ -50,14 +99,27 @@ export default function OpenGraphImage() {
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: 6,
+              gap: 8,
             }}
           >
-            <div style={{ color: "#f4f4f5", fontSize: 36, fontWeight: 650 }}>
-              Younes Kazemi
+            <div
+              style={{
+                color: "#f8fafc",
+                fontSize: 48,
+                fontWeight: 700,
+                lineHeight: 1.2,
+              }}
+            >
+              سیدیونس کاظمی
             </div>
-            <div style={{ color: "#7dd3fc", fontSize: 22, fontWeight: 500 }}>
-              Full-stack Web Developer
+            <div
+              style={{
+                color: "#7dd3fc",
+                fontSize: 28,
+                fontWeight: 700,
+              }}
+            >
+              توسعه‌دهنده فول‌استک وب
             </div>
           </div>
         </div>
@@ -66,19 +128,52 @@ export default function OpenGraphImage() {
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: 16,
-            maxWidth: 900,
+            gap: 18,
+            zIndex: 1,
+            maxWidth: 1000,
           }}
         >
-          <div style={{ color: "#a1a1aa", fontSize: 28, lineHeight: 1.35 }}>
-            WordPress shops & custom Next.js + Django products
+          <div
+            style={{
+              color: "#e2e8f0",
+              fontSize: 30,
+              lineHeight: 1.45,
+              fontWeight: 700,
+            }}
+          >
+            فروشگاه WordPress · محصول اختصاصی Next.js و Django
           </div>
-          <div style={{ color: "#52525b", fontSize: 22 }}>
-            youneskazemi.ir · Next · Django · WordPress
+          <div
+            style={{
+              display: "flex",
+              gap: 12,
+              flexWrap: "wrap",
+            }}
+          >
+            {["Next.js", "Django", "WordPress", "Web3"].map((tag) => (
+              <div
+                key={tag}
+                style={{
+                  display: "flex",
+                  padding: "10px 18px",
+                  borderRadius: 999,
+                  background: "rgba(15, 23, 42, 0.75)",
+                  border: "1px solid rgba(125, 211, 252, 0.35)",
+                  color: "#bae6fd",
+                  fontSize: 20,
+                  fontWeight: 700,
+                }}
+              >
+                {tag}
+              </div>
+            ))}
+          </div>
+          <div style={{ color: "#94a3b8", fontSize: 22, fontWeight: 700 }}>
+            youneskazemi.ir · Younes Kazemi
           </div>
         </div>
       </div>
     ),
-    { ...size },
+    { ...size, fonts },
   );
 }

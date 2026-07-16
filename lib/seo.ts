@@ -2,12 +2,18 @@ import type { Metadata } from "next";
 import { site } from "@/content/site";
 import { projects, type Project } from "@/content/projects";
 
-/** Primary public origin (canonical). */
+/** Primary public origin (canonical). Prefer apex; www also works via host. */
 export const siteUrl = `https://${site.domain}`;
 
-export const defaultTitle = `${site.name} · ${site.title}`;
+/** FA-first titles for share previews (site is Persian-first). */
+export const defaultTitle = `${site.nameFa} · ${site.titleFa}`;
+export const defaultTitleEn = `${site.name} · ${site.title}`;
+
 export const defaultDescription =
-  "Younes Kazemi (سیدیونس کاظمی) — full-stack web developer. WordPress & WooCommerce shops, custom Next.js + Django products. Freelance, Iran & remote.";
+  "سیدیونس کاظمی — توسعه‌دهنده فول‌استک وب. فروشگاه WordPress و WooCommerce، محصول اختصاصی با Next.js و Django. فریلنس در ایران و ریموت.";
+
+export const defaultDescriptionEn =
+  "Younes Kazemi — full-stack web developer. WordPress & WooCommerce shops, custom Next.js + Django products. Freelance, Iran & remote.";
 
 export function absoluteUrl(path = "/") {
   if (!path.startsWith("/")) path = `/${path}`;
@@ -15,12 +21,12 @@ export function absoluteUrl(path = "/") {
 }
 
 export function projectTitle(project: Project) {
-  return `${site.name} · ${project.title}`;
+  return `${site.nameFa} · ${project.titleFa}`;
 }
 
 export function projectMeta(project: Project): Metadata {
   const title = projectTitle(project);
-  const description = `${project.summary} | ${project.summaryFa}`;
+  const description = `${project.summaryFa} — ${project.summary}`;
   const url = absoluteUrl(`/projects/${project.slug}`);
   const image = project.image.startsWith("http")
     ? project.image
@@ -35,7 +41,7 @@ export function projectMeta(project: Project): Metadata {
       url,
       title,
       description,
-      siteName: site.name,
+      siteName: site.nameFa,
       locale: "fa_IR",
       alternateLocale: ["en_US"],
       images: [
@@ -43,7 +49,7 @@ export function projectMeta(project: Project): Metadata {
           url: image,
           width: 1600,
           height: 1000,
-          alt: `${project.title} — ${site.name}`,
+          alt: `${project.titleFa} — ${site.nameFa}`,
         },
       ],
     },
@@ -54,20 +60,19 @@ export function projectMeta(project: Project): Metadata {
       images: [image],
     },
     keywords: [
-      site.name,
       site.nameFa,
-      project.title,
+      site.name,
       project.titleFa,
+      project.title,
       ...project.tags,
       ...project.stack,
-      "portfolio",
-      "web developer",
+      "نمونه کار",
       "توسعه‌دهنده وب",
+      "portfolio",
     ],
   };
 }
 
-/** JSON-LD for Person + WebSite + ItemList (portfolio). */
 export function siteJsonLd() {
   return {
     "@context": "https://schema.org",
@@ -76,7 +81,8 @@ export function siteJsonLd() {
         "@type": "WebSite",
         "@id": `${siteUrl}/#website`,
         url: siteUrl,
-        name: site.name,
+        name: site.nameFa,
+        alternateName: site.name,
         description: defaultDescription,
         inLanguage: ["fa", "en"],
         publisher: { "@id": `${siteUrl}/#person` },
@@ -84,11 +90,11 @@ export function siteJsonLd() {
       {
         "@type": "Person",
         "@id": `${siteUrl}/#person`,
-        name: site.name,
-        alternateName: site.nameFa,
+        name: site.nameFa,
+        alternateName: site.name,
         url: siteUrl,
-        image: absoluteUrl("/logo.svg"),
-        jobTitle: site.title,
+        image: absoluteUrl("/og.png"),
+        jobTitle: site.titleFa,
         email: site.email,
         address: {
           "@type": "PostalAddress",
@@ -101,19 +107,19 @@ export function siteJsonLd() {
           "Django",
           "WordPress",
           "WooCommerce",
-          "Full-stack development",
+          "توسعه فول‌استک",
           "Telegram Mini Apps",
         ],
       },
       {
         "@type": "ItemList",
         "@id": `${siteUrl}/#projects`,
-        name: "Portfolio projects",
+        name: "نمونه کارها",
         itemListElement: projects.map((p, i) => ({
           "@type": "ListItem",
           position: i + 1,
           url: absoluteUrl(`/projects/${p.slug}`),
-          name: p.title,
+          name: p.titleFa,
         })),
       },
     ],
@@ -124,14 +130,15 @@ export function projectJsonLd(project: Project) {
   return {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
-    name: project.title,
-    alternateName: project.titleFa,
-    description: project.summary,
+    name: project.titleFa,
+    alternateName: project.title,
+    description: project.summaryFa,
     url: absoluteUrl(`/projects/${project.slug}`),
     image: absoluteUrl(project.image),
     creator: {
       "@type": "Person",
-      name: site.name,
+      name: site.nameFa,
+      alternateName: site.name,
       url: siteUrl,
     },
     keywords: [...project.tags, ...project.stack].join(", "),
