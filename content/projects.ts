@@ -156,7 +156,7 @@ export const projects: Project[] = [
 ];
 
 /**
- * Display order (home + all work).
+ * Full catalog order.
  * User: latorin → jrfit → apex78 → gallerychiic → ticktom → rimelcosmetics → …
  */
 export const recentSlugs = [
@@ -169,24 +169,32 @@ export const recentSlugs = [
   "rayan-ai",
 ] as const;
 
+/** How many case studies to show on the landing page before “View all”. */
+export const HOME_SHOWCASE_COUNT = 3;
+
 export function getProject(slug: string) {
   return projects.find((p) => p.slug === slug);
 }
 
-export function getRecentProjects() {
-  return recentSlugs
+/** Full ordered catalog (All work page). */
+export function getOrderedProjects() {
+  const ordered = recentSlugs
     .map((slug) => getProject(slug))
     .filter((p): p is Project => Boolean(p));
-}
-
-/** All projects sorted by `recentSlugs`, then any leftovers. */
-export function getOrderedProjects() {
-  const ordered = getRecentProjects();
   const seen = new Set(ordered.map((p) => p.slug));
   const rest = projects.filter((p) => !seen.has(p.slug));
   return [...ordered, ...rest];
 }
 
+/** Landing: first N projects only. */
+export function getHomeShowcaseProjects(n = HOME_SHOWCASE_COUNT) {
+  return getOrderedProjects().slice(0, n);
+}
+
+export function getRecentProjects() {
+  return getOrderedProjects();
+}
+
 export function getFeaturedProjects() {
-  return getRecentProjects();
+  return getHomeShowcaseProjects();
 }

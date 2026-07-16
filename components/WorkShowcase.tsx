@@ -3,7 +3,11 @@
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { getRecentProjects, type Project } from "@/content/projects";
+import {
+  getHomeShowcaseProjects,
+  getOrderedProjects,
+  type Project,
+} from "@/content/projects";
 import { BrowserFrame } from "@/components/BrowserFrame";
 import { useI18n } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
@@ -156,10 +160,12 @@ function CaseStudy({
   );
 }
 
-/** Home: recent work only + link to full catalog. */
+/** Home: N featured case studies only → route to /projects for the rest. */
 export function WorkShowcase() {
   const { t } = useI18n();
-  const list = getRecentProjects();
+  const list = getHomeShowcaseProjects();
+  const total = getOrderedProjects().length;
+  const viewAllLabel = t.viewAllWorkCount.replace("{n}", String(total));
 
   return (
     <section
@@ -186,12 +192,15 @@ export function WorkShowcase() {
             <p className="mt-4 text-base leading-relaxed text-zinc-400 sm:text-lg">
               {t.workSubtitle}
             </p>
+            {total > list.length && (
+              <p className="mt-2 text-sm text-zinc-500">{t.moreOnAllWork}</p>
+            )}
           </div>
           <Link
             href="/projects"
             className="inline-flex h-11 shrink-0 items-center justify-center rounded-full border border-white/12 px-5 text-sm font-medium text-zinc-200 transition hover:border-sky-400/40 hover:text-sky-200"
           >
-            {t.viewAllWork}
+            {viewAllLabel}
           </Link>
         </motion.header>
 
@@ -213,13 +222,16 @@ export function WorkShowcase() {
           ))}
         </div>
 
-        <div className="mt-16 flex justify-center sm:mt-20">
+        <div className="mt-16 flex flex-col items-center gap-3 sm:mt-20">
           <Link
             href="/projects"
-            className="inline-flex h-12 items-center rounded-full bg-white/[0.06] px-8 text-sm font-semibold text-zinc-100 ring-1 ring-white/10 transition hover:bg-sky-400 hover:text-black hover:ring-sky-400"
+            className="inline-flex h-12 items-center rounded-full bg-sky-400 px-8 text-sm font-semibold text-black transition hover:bg-sky-300"
           >
-            {t.viewAllWork}
+            {viewAllLabel}
           </Link>
+          <p className="text-xs text-zinc-500">
+            {list.length} / {total}
+          </p>
         </div>
       </div>
     </section>
