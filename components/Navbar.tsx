@@ -24,7 +24,7 @@ export function Navbar() {
     <motion.header
       className={cn(
         "fixed inset-x-0 top-0 z-40 transition-colors duration-300",
-        scrolled || open ? "glass shadow-lg shadow-black/20" : "bg-transparent",
+        scrolled || open ? "glass shadow-lg shadow-black/25" : "bg-transparent",
       )}
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -37,7 +37,6 @@ export function Navbar() {
           onClick={() => setOpen(false)}
           aria-label={brand}
         >
-          {/* One logo only: mark always, name from sm+ */}
           <Logo
             size="md"
             showWordmark
@@ -46,12 +45,12 @@ export function Navbar() {
           />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-0.5 md:flex" aria-label="Main">
           {navLinks.map((link) => (
             <a
               key={link.id}
               href={link.href}
-              className="rounded-lg px-3 py-2 text-sm text-zinc-400 transition hover:bg-white/5 hover:text-zinc-100"
+              className="inline-flex min-h-11 items-center rounded-lg px-3 text-sm text-zinc-400 transition hover:bg-white/5 hover:text-zinc-100"
             >
               {isFa ? link.labelFa : link.label}
             </a>
@@ -62,28 +61,29 @@ export function Navbar() {
           <button
             type="button"
             onClick={toggleLang}
-            className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs font-medium text-zinc-300 transition hover:border-sky-400/30 hover:text-sky-200"
-            aria-label="Toggle language"
+            className="inline-flex h-11 min-w-11 items-center justify-center rounded-lg border border-white/10 bg-white/5 px-2.5 text-xs font-medium text-zinc-300 transition hover:border-sky-400/30 hover:text-sky-200"
+            aria-label={lang === "fa" ? "Switch to English" : "تغییر به فارسی"}
           >
             {lang === "fa" ? "EN" : "فا"}
           </button>
 
           <a
             href="/#contact"
-            className="hidden rounded-full bg-sky-400 px-4 py-2 text-sm font-medium text-zinc-950 transition hover:bg-sky-300 sm:inline-flex"
+            className="btn-primary hidden h-10 min-h-10 px-4 sm:inline-flex"
           >
             {t.ctaContact}
           </a>
 
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-zinc-300 md:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 text-zinc-300 transition hover:border-white/20 hover:text-zinc-100 md:hidden"
             aria-expanded={open}
-            aria-label="Menu"
+            aria-controls="mobile-nav"
+            aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((v) => !v)}
           >
-            <span className="sr-only">Menu</span>
-            <div className="flex w-4 flex-col gap-1">
+            <span className="sr-only">{open ? "Close" : "Menu"}</span>
+            <div className="flex w-4 flex-col gap-1" aria-hidden>
               <span
                 className={cn(
                   "h-0.5 w-full rounded bg-current transition",
@@ -109,16 +109,18 @@ export function Navbar() {
 
       {open && (
         <motion.nav
+          id="mobile-nav"
           className="border-t border-white/5 px-5 py-4 md:hidden"
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
+          aria-label="Mobile"
         >
           <div className="flex flex-col gap-1">
             {navLinks.map((link) => (
               <a
                 key={link.id}
                 href={link.href}
-                className="rounded-lg px-3 py-3 text-sm text-zinc-300 hover:bg-white/5"
+                className="rounded-lg px-3 py-3 text-sm text-zinc-300 transition hover:bg-white/5 hover:text-white"
                 onClick={() => setOpen(false)}
               >
                 {isFa ? link.labelFa : link.label}
@@ -126,7 +128,7 @@ export function Navbar() {
             ))}
             <a
               href="/#contact"
-              className="mt-2 rounded-xl bg-sky-400 px-3 py-3 text-center text-sm font-medium text-zinc-950"
+              className="btn-primary mt-2 w-full"
               onClick={() => setOpen(false)}
             >
               {t.ctaContact}

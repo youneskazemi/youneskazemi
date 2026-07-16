@@ -86,16 +86,12 @@ export function ProjectCard({
         ease: [0.22, 1, 0.36, 1],
       }}
     >
-      {/* Preview */}
       <div
-        className={cn(
-          "relative",
-          featured ? "lg:col-span-7" : "w-full",
-        )}
+        className={cn("relative", featured ? "lg:col-span-7" : "w-full")}
       >
         <Link
           href={`/projects/${project.slug}`}
-          className="block outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="block rounded-[0.875rem] outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           aria-label={`${title} — ${t.details}`}
         >
           <BrowserFrame url={project.href}>
@@ -117,12 +113,10 @@ export function ProjectCard({
                 }
                 priority={index === 0}
               />
-              {/* Soft bottom fade only — keeps screenshot readable */}
               <div
                 className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-80"
                 aria-hidden
               />
-              {/* Accent line */}
               <div
                 className="absolute inset-x-0 top-0 h-px"
                 style={{
@@ -135,7 +129,6 @@ export function ProjectCard({
         </Link>
       </div>
 
-      {/* Meta */}
       <div
         className={cn(
           "flex flex-1 flex-col",
@@ -148,7 +141,7 @@ export function ProjectCard({
             style={{ backgroundColor: project.accent }}
             aria-hidden
           />
-          <span className="text-xs font-medium tracking-wide text-zinc-500">
+          <span className="text-xs font-medium text-zinc-400">
             {project.tags[0]}
             {project.tags[1] ? ` · ${project.tags[1]}` : ""}
           </span>
@@ -170,8 +163,8 @@ export function ProjectCard({
 
         <p
           className={cn(
-            "mt-2 leading-relaxed text-zinc-400",
-            featured ? "text-base sm:text-lg" : "text-sm line-clamp-2",
+            "mt-2 leading-relaxed text-zinc-300",
+            featured ? "text-base sm:text-lg" : "line-clamp-2 text-sm",
           )}
         >
           {summary}
@@ -182,7 +175,7 @@ export function ProjectCard({
             {project.stack.map((item) => (
               <li
                 key={item}
-                className="rounded-md border border-white/[0.07] bg-white/[0.03] px-2.5 py-1 text-xs text-zinc-300"
+                className="rounded-md border border-white/10 bg-white/[0.04] px-2.5 py-1 text-xs text-zinc-300"
               >
                 {item}
               </li>
@@ -200,17 +193,14 @@ export function ProjectCard({
             href={project.href}
             target="_blank"
             rel="noopener noreferrer"
-            className={cn(
-              "inline-flex h-11 min-w-[7.5rem] items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold transition",
-              "bg-sky-400 text-black hover:bg-sky-300",
-            )}
+            className="btn-primary min-w-[7.5rem]"
           >
             {t.live}
             <ExternalIcon />
           </a>
           <Link
             href={`/projects/${project.slug}`}
-            className="inline-flex h-11 items-center gap-1.5 rounded-full px-2 text-sm font-medium text-zinc-300 transition hover:text-white"
+            className="inline-flex h-11 items-center gap-1.5 rounded-full px-3 text-sm font-medium text-zinc-300 transition hover:text-white"
           >
             {t.details}
             <ArrowIcon className="transition rtl:rotate-180 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />

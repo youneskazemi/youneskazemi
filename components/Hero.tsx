@@ -147,16 +147,16 @@ export function Hero() {
         {/* Copy column */}
         <div className="order-1 flex flex-col justify-center lg:order-none">
           <motion.p
-            className="mb-4 text-sm font-medium tracking-wide text-sky-300/90"
+            className="mb-4 text-sm font-medium text-sky-300/95"
             initial={reduce ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.05 }}
+            transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
           >
             {title}
           </motion.p>
 
           <motion.h1
-            className="max-w-xl text-4xl font-semibold leading-[1.15] tracking-tight text-zinc-50 sm:text-5xl md:text-6xl"
+            className="max-w-xl text-4xl font-semibold leading-[1.12] tracking-tight text-zinc-50 sm:text-5xl md:text-6xl md:leading-[1.08]"
             initial={reduce ? false : { opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
@@ -166,10 +166,10 @@ export function Hero() {
           </motion.h1>
 
           <motion.p
-            className="mt-6 max-w-lg text-base leading-relaxed text-zinc-400 sm:text-lg"
+            className="mt-6 max-w-lg text-base leading-relaxed text-zinc-300 sm:text-lg sm:leading-relaxed"
             initial={reduce ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.22 }}
+            transition={{ duration: 0.55, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
           >
             {t.heroLine}
           </motion.p>
@@ -178,24 +178,18 @@ export function Hero() {
             className="mt-9 flex flex-wrap items-center gap-3"
             initial={reduce ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.32 }}
+            transition={{ duration: 0.5, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
           >
-            <a
-              href="#work"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-sky-400 px-6 text-sm font-semibold text-black transition hover:bg-sky-300"
-            >
+            <a href="#work" className="btn-primary">
               {t.ctaWork}
             </a>
-            <a
-              href="#contact"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-white/12 bg-white/5 px-6 text-sm font-medium text-zinc-100 transition hover:border-sky-400/30 hover:bg-white/8"
-            >
+            <a href="#contact" className="btn-secondary">
               {t.ctaContact}
             </a>
           </motion.div>
 
           <motion.div
-            className="mt-12 flex flex-wrap gap-2 text-xs text-zinc-500"
+            className="mt-12 flex flex-wrap gap-2"
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
@@ -203,7 +197,7 @@ export function Hero() {
             {["Next.js", "Django", "WordPress", "Tailwind"].map((tag) => (
               <span
                 key={tag}
-                className="rounded-full border border-white/8 bg-white/[0.03] px-3 py-1.5 text-zinc-400"
+                className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-zinc-300"
               >
                 {tag}
               </span>
@@ -211,7 +205,6 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Visual column — was empty before */}
         <motion.div
           className="order-2 lg:order-none"
           initial={reduce ? false : { opacity: 0, x: isFa ? -24 : 24 }}
@@ -231,10 +224,16 @@ export function Hero() {
       >
         <a
           href="#work"
-          className="flex flex-col items-center gap-2 text-xs text-zinc-500 transition hover:text-zinc-300"
+          className="flex min-h-11 min-w-11 flex-col items-center justify-center gap-2 text-xs text-zinc-400 transition hover:text-zinc-200"
+          aria-label={isFa ? "برو به نمونه‌کارها" : "Scroll to work"}
         >
-          <span className="h-8 w-px bg-gradient-to-b from-transparent via-zinc-500 to-transparent" />
-          <span aria-hidden>↓</span>
+          <span
+            className="h-8 w-px bg-gradient-to-b from-transparent via-zinc-400 to-transparent"
+            aria-hidden
+          />
+          <span aria-hidden className="text-zinc-400">
+            ↓
+          </span>
         </a>
       </motion.div>
     </section>

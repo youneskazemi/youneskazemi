@@ -18,8 +18,10 @@ export function BrowserFrame({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-2xl border border-white/[0.1] bg-[#0a0a0f]",
-        "shadow-[0_32px_64px_-24px_rgba(0,0,0,0.85),0_0_0_1px_rgba(255,255,255,0.03)_inset]",
+        /* Shadow only (no border+wide-shadow ghost-card); inset rim for depth */
+        "overflow-hidden rounded-[0.875rem] bg-[#0a0a0f]",
+        "shadow-[0_8px_0_0_rgba(0,0,0,0.35),0_20px_40px_-16px_rgba(0,0,0,0.75)]",
+        "ring-1 ring-white/[0.08]",
         className,
       )}
     >
@@ -29,7 +31,7 @@ export function BrowserFrame({
           <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]/70" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/70" />
         </div>
-        <div className="min-w-0 flex-1 truncate rounded-lg bg-black/50 px-3 py-1.5 text-center font-mono text-[11px] text-zinc-400 ring-1 ring-white/[0.04]">
+        <div className="min-w-0 flex-1 truncate rounded-md bg-black/50 px-3 py-1.5 text-center font-mono text-[11px] leading-none text-zinc-400 ring-1 ring-white/[0.04]">
           {host}
         </div>
       </div>

@@ -75,7 +75,7 @@ export function HeroVisual() {
         aria-hidden
       />
 
-      <p className="mb-3 text-center text-[11px] font-medium uppercase tracking-[0.16em] text-zinc-500 sm:text-start">
+      <p className="mb-3 text-center text-sm font-medium text-zinc-400 sm:text-start">
         {isFa ? "پروژه‌های اخیر" : "Recent work"}
       </p>
 
@@ -130,10 +130,9 @@ export function HeroVisual() {
               onClick={prev}
               aria-label={isFa ? "قبلی" : "Previous project"}
               className={cn(
-                "absolute top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full",
-                "border border-white/12 bg-black/55 text-zinc-100 backdrop-blur-md transition",
-                "hover:border-sky-400/40 hover:bg-black/75 hover:text-sky-200",
-                "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400",
+                "absolute top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full",
+                "border border-white/12 bg-black/60 text-zinc-100 backdrop-blur-md transition",
+                "hover:border-sky-400/40 hover:bg-black/80 hover:text-sky-200",
                 "start-2 sm:-start-3",
               )}
             >
@@ -144,10 +143,9 @@ export function HeroVisual() {
               onClick={next}
               aria-label={isFa ? "بعدی" : "Next project"}
               className={cn(
-                "absolute top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full",
-                "border border-white/12 bg-black/55 text-zinc-100 backdrop-blur-md transition",
-                "hover:border-sky-400/40 hover:bg-black/75 hover:text-sky-200",
-                "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400",
+                "absolute top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full",
+                "border border-white/12 bg-black/60 text-zinc-100 backdrop-blur-md transition",
+                "hover:border-sky-400/40 hover:bg-black/80 hover:text-sky-200",
                 "end-2 sm:-end-3",
               )}
             >
@@ -163,13 +161,13 @@ export function HeroVisual() {
           <p className="truncate text-sm font-semibold text-zinc-100">
             {title}
           </p>
-          <p className="mt-0.5 truncate text-xs text-zinc-500">
+          <p className="mt-0.5 truncate text-xs text-zinc-400">
             {current.tags.slice(0, 2).join(" · ")}
           </p>
         </div>
         <Link
           href={`/projects/${current.slug}`}
-          className="shrink-0 text-xs font-semibold text-sky-300 transition hover:text-sky-200"
+          className="inline-flex min-h-11 shrink-0 items-center text-sm font-semibold text-sky-300 transition hover:text-sky-200"
         >
           {t.details} →
         </Link>
@@ -177,7 +175,7 @@ export function HeroVisual() {
 
       {count > 1 && (
         <div
-          className="mt-4 flex items-center justify-center gap-2"
+          className="mt-4 flex items-center justify-center gap-1.5"
           role="tablist"
           aria-label={isFa ? "اسلاید پروژه‌ها" : "Project slides"}
         >
@@ -190,20 +188,26 @@ export function HeroVisual() {
               aria-label={isFa ? p.titleFa : p.title}
               onClick={() => go(i, i > index ? 1 : -1)}
               className={cn(
-                "h-1.5 rounded-full transition-all duration-300",
-                i === index
-                  ? "w-6 bg-sky-400"
-                  : "w-1.5 bg-white/25 hover:bg-white/45",
+                "flex h-11 items-center justify-center px-1",
               )}
-            />
+            >
+              <span
+                className={cn(
+                  "block h-1.5 rounded-full transition-all duration-300",
+                  i === index
+                    ? "w-6 bg-sky-400"
+                    : "w-1.5 bg-white/25 hover:bg-white/45",
+                )}
+              />
+            </button>
           ))}
         </div>
       )}
 
-      <div className="mt-3 text-center">
+      <div className="mt-2 text-center">
         <Link
           href="/projects"
-          className="text-[11px] font-medium text-zinc-500 transition hover:text-sky-300"
+          className="inline-flex min-h-11 items-center text-sm font-medium text-zinc-400 transition hover:text-sky-300"
         >
           {t.viewAllWork} →
         </Link>

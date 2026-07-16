@@ -22,19 +22,23 @@ export function Process() {
           {steps.map((step, i) => (
             <motion.li
               key={step.step}
-              className="relative rounded-2xl border border-white/8 bg-card/90 p-6"
+              className="surface-card relative p-6"
               initial={reduce ? false : { opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
+              transition={{
+                delay: i * 0.1,
+                duration: 0.5,
+                ease: [0.22, 1, 0.36, 1],
+              }}
             >
-              <span className="font-mono text-2xl font-semibold text-sky-400/80">
+              <span className="font-mono text-2xl font-semibold tabular-nums text-sky-400/90">
                 {step.step}
               </span>
-              <h3 className="mt-3 text-lg font-semibold text-zinc-50">
+              <h3 className="mt-3 text-lg font-semibold tracking-tight text-zinc-50">
                 {step.title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-400">
+              <p className="mt-2 text-sm leading-relaxed text-zinc-300">
                 {step.desc}
               </p>
             </motion.li>

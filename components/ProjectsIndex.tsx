@@ -72,7 +72,7 @@ function ProjectTile({
             style={{ backgroundColor: project.accent }}
             aria-hidden
           />
-          <span className="text-xs text-zinc-500">
+          <span className="text-xs text-zinc-400">
             {project.tags.slice(0, 2).join(" · ")}
             {project.year ? ` · ${project.year}` : ""}
           </span>
@@ -80,26 +80,26 @@ function ProjectTile({
         <h2 className="text-xl font-semibold tracking-tight text-zinc-50">
           <Link
             href={`/projects/${project.slug}`}
-            className="hover:text-sky-200"
+            className="transition hover:text-sky-200"
           >
             {title}
           </Link>
         </h2>
-        <p className="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed text-zinc-400">
+        <p className="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed text-zinc-300">
           {summary}
         </p>
-        <div className="mt-4 flex flex-wrap gap-3">
+        <div className="mt-4 flex flex-wrap items-center gap-2">
           <a
             href={project.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-semibold text-sky-300 hover:text-sky-200"
+            className="inline-flex min-h-11 items-center text-sm font-semibold text-sky-300 transition hover:text-sky-200"
           >
             {t.live} ↗
           </a>
           <Link
             href={`/projects/${project.slug}`}
-            className="text-sm font-medium text-zinc-400 hover:text-zinc-200"
+            className="inline-flex min-h-11 items-center px-2 text-sm font-medium text-zinc-400 transition hover:text-zinc-200"
           >
             {t.details}
           </Link>
@@ -130,26 +130,23 @@ export function ProjectsIndex() {
             className="max-w-2xl pb-10 pt-6 sm:pb-12"
             initial={reduce ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-sky-400/90">
-              Portfolio
-            </p>
-            <h1 className="text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl md:text-5xl">
+            <h1 className="text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl md:text-5xl md:leading-tight">
               {t.allWorkTitle}
             </h1>
-            <p className="mt-4 text-base leading-relaxed text-zinc-400 sm:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-zinc-300 sm:text-lg">
               {t.allWorkSubtitle}
             </p>
-            <p className="mt-3 text-sm text-zinc-500">
+            <p className="mt-3 text-sm tabular-nums text-zinc-400">
               {filtered.length} {t.projectsCount}
             </p>
           </motion.header>
 
-          {/* Filters */}
           <div
             className="mb-10 flex flex-wrap gap-2"
             role="tablist"
-            aria-label="Filter projects"
+            aria-label={isFa ? "فیلتر پروژه‌ها" : "Filter projects"}
           >
             {FILTERS.map((f) => {
               const active = filter === f.id;
@@ -161,7 +158,7 @@ export function ProjectsIndex() {
                   aria-selected={active}
                   onClick={() => setFilter(f.id)}
                   className={cn(
-                    "h-10 rounded-full px-4 text-sm font-medium transition",
+                    "inline-flex h-11 items-center rounded-full px-4 text-sm font-medium transition",
                     active
                       ? "bg-sky-400 text-black"
                       : "border border-white/10 bg-white/[0.03] text-zinc-400 hover:border-white/20 hover:text-zinc-200",
@@ -192,7 +189,7 @@ export function ProjectsIndex() {
           <div className="mt-16">
             <Link
               href="/#work"
-              className="text-sm text-zinc-400 transition hover:text-sky-300"
+              className="inline-flex min-h-11 items-center text-sm text-zinc-400 transition hover:text-sky-300"
             >
               ← {t.backHome}
             </Link>

@@ -64,27 +64,27 @@ function CaseStudy({
           )}
         >
           <div
-            className="pointer-events-none absolute -inset-4 rounded-[2rem] opacity-40 blur-2xl transition duration-500 group-hover:opacity-70"
+            className="pointer-events-none absolute -inset-4 rounded-2xl opacity-35 blur-2xl transition duration-500 group-hover:opacity-60"
             style={{
-              background: `radial-gradient(ellipse at center, ${project.accent}33, transparent 70%)`,
+              background: `radial-gradient(ellipse at center, ${project.accent}40, transparent 70%)`,
             }}
             aria-hidden
           />
           <Link
             href={`/projects/${project.slug}`}
-            className="relative block outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+            className="relative block rounded-[0.875rem] outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-4 focus-visible:ring-offset-background"
             aria-label={`${title} — ${t.details}`}
           >
             <BrowserFrame
               url={project.href}
-              className="transition duration-500 group-hover:-translate-y-1"
+              className="transition duration-500 ease-out group-hover:-translate-y-1"
             >
               <div className="relative aspect-[16/10] overflow-hidden bg-[#0c0c12]">
                 <Image
                   src={project.image}
                   alt={title}
                   fill
-                  className="object-cover object-top transition duration-700 ease-out group-hover:scale-[1.02]"
+                  className="object-cover object-top transition duration-700 ease-out group-hover:scale-[1.025]"
                   sizes="(max-width: 1024px) 100vw, 58vw"
                   priority={index === 0}
                 />
@@ -99,21 +99,22 @@ function CaseStudy({
             imageFirst ? "lg:order-2" : "lg:order-1",
           )}
         >
+          {/* Index only — no uppercase tracked kicker */}
           <div className="mb-5 flex items-center gap-3">
             <span
-              className="font-mono text-sm tabular-nums tracking-wider"
+              className="font-mono text-sm tabular-nums"
               style={{ color: project.accent }}
             >
               {num}
             </span>
             <span className="h-px w-8 bg-white/15" aria-hidden />
-            <span className="text-xs font-medium uppercase tracking-[0.14em] text-zinc-500">
+            <span className="text-sm text-zinc-400">
               {project.tags[0]}
-              {project.tags[1] ? ` / ${project.tags[1]}` : ""}
+              {project.tags[1] ? ` · ${project.tags[1]}` : ""}
             </span>
           </div>
 
-          <h3 className="text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl">
+          <h3 className="text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl sm:leading-tight">
             <Link
               href={`/projects/${project.slug}`}
               className="underline-offset-4 transition hover:text-white hover:underline hover:decoration-sky-400/50"
@@ -122,7 +123,7 @@ function CaseStudy({
             </Link>
           </h3>
 
-          <p className="mt-4 max-w-md text-base leading-relaxed text-zinc-400 sm:text-[1.05rem]">
+          <p className="mt-4 max-w-md text-base leading-relaxed text-zinc-300 sm:text-[1.05rem] sm:leading-relaxed">
             {summary}
           </p>
 
@@ -130,7 +131,7 @@ function CaseStudy({
             {project.stack.map((item) => (
               <li
                 key={item}
-                className="rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1 text-xs text-zinc-300"
+                className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-zinc-300"
               >
                 {item}
               </li>
@@ -142,14 +143,14 @@ function CaseStudy({
               href={project.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-sky-400 px-6 text-sm font-semibold text-black transition hover:bg-sky-300"
+              className="btn-primary"
             >
               {t.live}
               <ExternalIcon />
             </a>
             <Link
               href={`/projects/${project.slug}`}
-              className="inline-flex h-12 items-center gap-2 rounded-full border border-white/12 px-5 text-sm font-medium text-zinc-200 transition hover:border-white/25 hover:bg-white/[0.04] hover:text-white"
+              className="btn-secondary"
             >
               {t.details}
             </Link>
@@ -176,30 +177,24 @@ export function WorkShowcase() {
     >
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-6">
         <motion.header
-          className="mb-14 flex max-w-3xl flex-col gap-4 sm:mb-16 lg:mb-20 lg:flex-row lg:items-end lg:justify-between lg:max-w-none"
+          className="mb-14 flex max-w-3xl flex-col gap-5 sm:mb-16 lg:mb-20 lg:max-w-none lg:flex-row lg:items-end lg:justify-between"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="max-w-2xl">
-            <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-sky-400/90">
-              Portfolio
-            </p>
-            <h2 className="text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl">
+            <h2 className="text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl sm:leading-tight">
               {t.workTitle}
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-zinc-400 sm:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-zinc-300 sm:text-lg">
               {t.workSubtitle}
             </p>
             {total > list.length && (
-              <p className="mt-2 text-sm text-zinc-500">{t.moreOnAllWork}</p>
+              <p className="mt-2 text-sm text-zinc-400">{t.moreOnAllWork}</p>
             )}
           </div>
-          <Link
-            href="/projects"
-            className="inline-flex h-11 shrink-0 items-center justify-center rounded-full border border-white/12 px-5 text-sm font-medium text-zinc-200 transition hover:border-sky-400/40 hover:text-sky-200"
-          >
+          <Link href="/projects" className="btn-secondary shrink-0">
             {viewAllLabel}
           </Link>
         </motion.header>
@@ -214,7 +209,7 @@ export function WorkShowcase() {
               />
               {i < list.length - 1 && (
                 <div
-                  className="my-16 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent sm:my-20 lg:my-24"
+                  className="my-16 h-px w-full bg-gradient-to-r from-transparent via-white/12 to-transparent sm:my-20 lg:my-24"
                   aria-hidden
                 />
               )}
@@ -223,13 +218,10 @@ export function WorkShowcase() {
         </div>
 
         <div className="mt-16 flex flex-col items-center gap-3 sm:mt-20">
-          <Link
-            href="/projects"
-            className="inline-flex h-12 items-center rounded-full bg-sky-400 px-8 text-sm font-semibold text-black transition hover:bg-sky-300"
-          >
+          <Link href="/projects" className="btn-primary px-8">
             {viewAllLabel}
           </Link>
-          <p className="text-xs text-zinc-500">
+          <p className="text-xs tabular-nums text-zinc-400">
             {list.length} / {total}
           </p>
         </div>
