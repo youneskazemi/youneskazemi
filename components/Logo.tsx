@@ -8,7 +8,8 @@ type LogoProps = {
   markClassName?: string;
   showWordmark?: boolean;
   wordmark?: string;
-  /** "mark" = icon only (default when no wordmark). */
+  /** Hide wordmark below sm (default true when wordmark shown). */
+  wordmarkClassName?: string;
   size?: "sm" | "md" | "lg";
 };
 
@@ -19,14 +20,14 @@ const sizeMap = {
 } as const;
 
 /**
- * YK monogram — minimal geometric, sky cyan on dark.
- * Optimized for 16–36px (nav + favicon). Hand SVG, not AI raster.
+ * YK monogram — one mark only. Wordmark is optional text beside it.
  */
 export function Logo({
   className,
   markClassName,
   showWordmark = false,
   wordmark,
+  wordmarkClassName,
   size = "md",
 }: LogoProps) {
   const uid = useId().replace(/:/g, "");
@@ -46,7 +47,6 @@ export function Logo({
         )}
         aria-hidden
       >
-        {/* corner accent — brand detail without noise */}
         <span
           className="pointer-events-none absolute start-0 top-0 h-2 w-2 border-s border-t border-sky-400/50"
           style={{ borderStartStartRadius: 4 }}
@@ -57,7 +57,6 @@ export function Logo({
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          {/* Y — left mass */}
           <path
             d="M8 8 L16 20 V32"
             stroke={`url(#${gradId})`}
@@ -72,7 +71,6 @@ export function Logo({
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          {/* K — right mass, optical center shared at (16,20) band */}
           <path
             d="M25 8 V32"
             stroke="#7dd3fc"
@@ -107,7 +105,12 @@ export function Logo({
         </svg>
       </span>
       {showWordmark && wordmark ? (
-        <span className="text-sm font-semibold tracking-tight text-zinc-50 sm:text-[0.95rem]">
+        <span
+          className={cn(
+            "text-sm font-semibold tracking-tight text-zinc-50 sm:text-[0.95rem]",
+            wordmarkClassName,
+          )}
+        >
           {wordmark}
         </span>
       ) : null}

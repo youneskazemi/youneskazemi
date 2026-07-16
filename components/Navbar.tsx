@@ -33,12 +33,17 @@ export function Navbar() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5 sm:h-[4.25rem] sm:px-6">
         <Link
           href="/#top"
-          className="group flex items-center gap-2 text-sm font-semibold tracking-tight text-zinc-50 sm:text-base"
+          className="group flex min-h-11 min-w-11 items-center gap-2 text-sm font-semibold tracking-tight text-zinc-50 sm:text-base"
           onClick={() => setOpen(false)}
           aria-label={brand}
         >
-          <Logo showWordmark wordmark={brand} size="md" className="hidden sm:inline-flex" />
-          <Logo size="md" className="sm:hidden" />
+          {/* One logo only: mark always, name from sm+ */}
+          <Logo
+            size="md"
+            showWordmark
+            wordmark={brand}
+            wordmarkClassName="hidden sm:inline"
+          />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
