@@ -41,41 +41,13 @@ export default async function OpenGraphImage() {
           background:
             "linear-gradient(135deg, #0c4a6e 0%, #0f172a 42%, #020617 100%)",
           fontFamily: fontData ? "Vazirmatn" : "sans-serif",
-          position: "relative",
         }}
       >
-        {/* decorative orbs (Satori-friendly solid circles) */}
-        <div
-          style={{
-            position: "absolute",
-            top: -80,
-            right: -40,
-            width: 360,
-            height: 360,
-            borderRadius: 999,
-            background: "rgba(56, 189, 248, 0.35)",
-            display: "flex",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: -100,
-            left: -60,
-            width: 320,
-            height: 320,
-            borderRadius: 999,
-            background: "rgba(167, 139, 250, 0.28)",
-            display: "flex",
-          }}
-        />
-
         <div
           style={{
             display: "flex",
             alignItems: "center",
             gap: 22,
-            zIndex: 1,
           }}
         >
           <div
@@ -129,7 +101,6 @@ export default async function OpenGraphImage() {
             display: "flex",
             flexDirection: "column",
             gap: 18,
-            zIndex: 1,
             maxWidth: 1000,
           }}
         >
