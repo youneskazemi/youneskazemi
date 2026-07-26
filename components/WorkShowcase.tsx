@@ -99,7 +99,7 @@ function CaseStudy({
                     alt={title}
                     fill
                     className="object-cover object-top transition duration-700 ease-out group-hover:scale-[1.025]"
-                    sizes="(max-width: 1024px) 100vw, 58vw"
+                    sizes="(max-width: 1024px) 100vw, 42vw"
                     priority={index === 0}
                   />
                 </ParallaxMedia>
@@ -193,52 +193,53 @@ export function WorkShowcase() {
       className="section-pad scroll-mt-24"
     >
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-6">
-        <header className="mb-14 flex max-w-3xl flex-col gap-5 sm:mb-16 lg:mb-20 lg:max-w-none lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl sm:leading-tight">
-              <MaskRise>{t.workTitle}</MaskRise>
-            </h2>
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-12%" }}
-              transition={{ duration: 0.5, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <p className="mt-4 text-base leading-relaxed text-zinc-300 sm:text-lg">
-                {t.workSubtitle}
-              </p>
-              {total > list.length && (
-                <p className="mt-2 text-sm text-zinc-400">{t.moreOnAllWork}</p>
-              )}
-            </motion.div>
-          </div>
-          <Link href="/projects" className="btn-secondary shrink-0">
-            {viewAllLabel}
-          </Link>
-        </header>
-
-        <div className="flex flex-col">
-          {list.map((project, i) => (
-            <div key={project.slug}>
-              {/* Alternating indent — bench layout, not a stacked grid */}
-              <div className={cn(i % 2 === 1 && "lg:ps-10 xl:ps-16")}>
-                <CaseStudy project={project} index={i} reverse={i % 2 === 1} />
-              </div>
-              {i < list.length - 1 && (
-                <div
-                  className="my-16 h-px w-full bg-gradient-to-r from-transparent via-white/12 to-transparent sm:my-20 lg:my-24"
-                  aria-hidden
-                />
-              )}
+        {/* Header rides along as a sticky rail while the case studies scroll */}
+        <div className="lg:grid lg:grid-cols-[13rem_1fr] lg:gap-10 xl:grid-cols-[15rem_1fr] xl:gap-14">
+          <header className="mb-14 flex max-w-3xl flex-col gap-5 sm:mb-16 lg:mb-0 lg:sticky lg:top-28 lg:self-start lg:items-start">
+            <div>
+              <h2 className="text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl sm:leading-tight lg:text-[2rem] lg:leading-tight">
+                <MaskRise>{t.workTitle}</MaskRise>
+              </h2>
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-12%" }}
+                transition={{ duration: 0.5, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <p className="mt-4 text-base leading-relaxed text-zinc-300 sm:text-lg lg:text-base">
+                  {t.workSubtitle}
+                </p>
+                {total > list.length && (
+                  <p className="mt-2 text-sm text-zinc-400">{t.moreOnAllWork}</p>
+                )}
+              </motion.div>
             </div>
-          ))}
+            <Link href="/projects" className="btn-secondary shrink-0">
+              {viewAllLabel}
+            </Link>
+          </header>
+
+          <div className="flex min-w-0 flex-col">
+            {list.map((project, i) => (
+              <div key={project.slug}>
+                <CaseStudy project={project} index={i} reverse={i % 2 === 1} />
+                {i < list.length - 1 && (
+                  <div
+                    className="my-16 h-px w-full bg-gradient-to-r from-transparent via-white/12 to-transparent sm:my-20 lg:my-24"
+                    aria-hidden
+                  />
+                )}
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="mt-16 flex flex-col items-center gap-3 sm:mt-20">
           <Link href="/projects" className="btn-primary px-8">
             {viewAllLabel}
           </Link>
-          <p className="text-xs tabular-nums text-zinc-400">
+          {/* dir=ltr: bidi reordering was rendering "3 / 9" as "9 / 3" */}
+          <p dir="ltr" className="text-xs tabular-nums text-zinc-400">
             {list.length} / {total}
           </p>
         </div>
