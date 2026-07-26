@@ -111,7 +111,16 @@ components:
 
 A dark, calm bench for real tools and screenshots — craft without theatrics. The interface feels like a focused freelaner workspace at night: near-black surfaces, one sky-cyan accent, and browser-framed product shots that carry the proof. Personality is **clear · capable · direct** (see PRODUCT.md): short copy, live links, phased delivery language, FA-first hospitality.
 
-Density is airy on the home narrative and tighter on the `/projects` catalog. Motion is present but subordinate — scroll depth and in-view reveals support hierarchy; they never replace content. The system explicitly rejects **generic AI SaaS dark templates** (purple glows as identity, hero-metric rows, identical icon cards, startup landing clichés).
+Density is airy on the home narrative and tighter on the `/projects` catalog. Motion is present but subordinate — scroll depth and in-view reveals support hierarchy; they never replace content.
+
+**Motion hierarchy (normative).** Depth lands on the *proof*, never on decoration:
+
+1. **Screenshots** drift inside their browser frame as it crosses the viewport (`ParallaxMedia`) — the shot appears to scroll its own page.
+2. **Frames** settle from a 5° `rotateX` as they enter, once, per case study.
+3. **Headings** rise out of a clip box (`MaskRise` + `.mask-rise`, descender-safe for FA).
+4. **Prose and rows** get a short fade only.
+
+One uniform fade applied to every element on the page is a template tell; so is parallax on floating background blobs. The system explicitly rejects **generic AI SaaS dark templates** (purple glows as identity, hero-metric rows, identical icon cards, startup landing clichés).
 
 **Key Characteristics:**
 
@@ -176,7 +185,7 @@ Depth is **tonal + ring, rare lift**. Surfaces sit on void via slightly lighter 
 
 - **Frame lift** (`0 8px 0 0 rgba(0,0,0,0.35), 0 20px 40px -16px rgba(0,0,0,0.75)` + `ring-1 ring-white/8`): `BrowserFrame` only.
 - **Nav glass**: translucent dark bar + blur when scrolled — functional, not decorative glassmorphism everywhere.
-- **Ambient orbs**: large blurred radial blobs in the hero mesh; non-interactive, low opacity.
+- **Bench grid** (`.workshop-grid`): 72px hairline grid in the hero only, radially masked, drifting with pointer + scroll and fading out by mid-hero. Replaces the old floating orb pair — orb constellations behind a hero are the single most recognizable AI-template tell.
 
 **The Flat-At-Rest Rule.** `.surface-card` has border + fill, no drop shadow. Do not pair 1px border with wide soft shadows on buttons or generic cards (ghost-card ban).
 
@@ -191,7 +200,8 @@ Depth is **tonal + ring, rare lift**. Surfaces sit on void via slightly lighter 
 
 ### Chips / tags
 
-- Soft pill or slightly rounded pill: border `white/10`, fill `white/[0.04]`, text zinc-300, small type. Used for stack tags and skill items — not as primary navigation.
+- Soft pill or slightly rounded pill: border `white/10`, fill `white/[0.04]`, text zinc-300, small type. Used for **stack tags on project cards** — not as primary navigation.
+- Skills are **not** chips in a card grid: they render as a spec sheet (`dl` rows on hairlines, plain type, `·` separators). Four identical bordered chip-cards is a template tell.
 
 ### Cards / containers
 

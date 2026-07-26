@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/content/projects";
 import { BrowserFrame } from "@/components/BrowserFrame";
+import { ParallaxMedia } from "@/components/Parallax";
 import { useI18n } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
 
@@ -97,22 +98,27 @@ export function ProjectCard({
           <BrowserFrame url={project.href}>
             <div
               className={cn(
-                "relative overflow-hidden bg-zinc-900",
+                "relative",
                 featured ? "aspect-[16/10]" : "aspect-[16/11]",
               )}
             >
-              <Image
-                src={project.image}
-                alt={title}
-                fill
-                className="object-cover transition duration-500 ease-out group-hover:scale-[1.03]"
-                sizes={
-                  featured
-                    ? "(max-width: 1024px) 100vw, 55vw"
-                    : "(max-width: 768px) 100vw, 33vw"
-                }
-                priority={index === 0}
-              />
+              <ParallaxMedia
+                className="absolute inset-0 bg-zinc-900"
+                amount={featured ? 8 : 6}
+              >
+                <Image
+                  src={project.image}
+                  alt={title}
+                  fill
+                  className="object-cover object-top transition duration-500 ease-out group-hover:scale-[1.03]"
+                  sizes={
+                    featured
+                      ? "(max-width: 1024px) 100vw, 55vw"
+                      : "(max-width: 768px) 100vw, 33vw"
+                  }
+                  priority={index === 0}
+                />
+              </ParallaxMedia>
               <div
                 className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-80"
                 aria-hidden

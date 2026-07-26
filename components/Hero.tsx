@@ -2,7 +2,6 @@
 
 import {
   motion,
-  useMotionTemplate,
   useMotionValue,
   useReducedMotion,
   useScroll,
@@ -28,17 +27,12 @@ export function Hero() {
   const smoothX = useSpring(mouseX, { stiffness: 60, damping: 18 });
   const smoothY = useSpring(mouseY, { stiffness: 60, damping: 18 });
 
-  const orbX = useTransform(smoothX, [-0.5, 0.5], reduce ? [0, 0] : [-28, 28]);
-  const orbMouseY = useTransform(
+  // Bench grid drifts with pointer + scroll — depth without an orb constellation
+  const gridX = useTransform(smoothX, [-0.5, 0.5], reduce ? [0, 0] : [-18, 18]);
+  const gridMouseY = useTransform(
     smoothY,
     [-0.5, 0.5],
-    reduce ? [0, 0] : [-18, 18],
-  );
-  const orb2X = useTransform(smoothX, [-0.5, 0.5], reduce ? [0, 0] : [22, -22]);
-  const orb2MouseY = useTransform(
-    smoothY,
-    [-0.5, 0.5],
-    reduce ? [0, 0] : [14, -14],
+    reduce ? [0, 0] : [-12, 12],
   );
   const titleMouseY = useTransform(
     smoothY,
@@ -47,24 +41,16 @@ export function Hero() {
   );
 
   const yBg = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 160]);
-  const yOrbScroll = useTransform(
+  const yGridScroll = useTransform(
     scrollYProgress,
     [0, 1],
-    reduce ? [0, 0] : [0, 240],
+    reduce ? [0, 0] : [0, 220],
   );
-  const yOrb2Scroll = useTransform(
-    scrollYProgress,
-    [0, 1],
-    reduce ? [0, 0] : [40, 300],
-  );
-  const yOrb = useTransform(
-    [yOrbScroll, orbMouseY],
+  const yGrid = useTransform(
+    [yGridScroll, gridMouseY],
     ([s, m]) => (s as number) + (m as number),
   );
-  const yOrb2 = useTransform(
-    [yOrb2Scroll, orb2MouseY],
-    ([s, m]) => (s as number) + (m as number),
-  );
+  const gridOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   const yContent = useTransform(
     scrollYProgress,
@@ -81,13 +67,6 @@ export function Hero() {
     [0, 1],
     reduce ? [1, 1] : [1, 0.97],
   );
-  const blur = useTransform(
-    scrollYProgress,
-    [0, 0.8],
-    reduce ? [0, 0] : [0, 3],
-  );
-  const contentFilter = useMotionTemplate`blur(${blur}px)`;
-
   const name = isFa ? site.nameFa : site.name;
   const title = isFa ? site.titleFa : site.title;
 
@@ -121,13 +100,8 @@ export function Hero() {
         aria-hidden
       />
       <motion.div
-        style={{ y: yOrb, x: orbX }}
-        className="pointer-events-none absolute -start-24 top-24 h-72 w-72 rounded-full bg-sky-500/20 blur-3xl sm:h-96 sm:w-96"
-        aria-hidden
-      />
-      <motion.div
-        style={{ y: yOrb2, x: orb2X }}
-        className="pointer-events-none absolute -end-16 top-40 h-64 w-64 rounded-full bg-violet-500/15 blur-3xl sm:h-80 sm:w-80"
+        style={{ y: yGrid, x: gridX, opacity: gridOpacity }}
+        className="workshop-grid pointer-events-none absolute -inset-x-24 -top-24 bottom-0"
         aria-hidden
       />
       <div
@@ -136,12 +110,7 @@ export function Hero() {
       />
 
       <motion.div
-        style={{
-          y: yContent,
-          opacity,
-          scale,
-          filter: reduce ? undefined : contentFilter,
-        }}
+        style={{ y: yContent, opacity, scale }}
         className="relative mx-auto grid min-h-[calc(100svh-6rem)] max-w-6xl items-center gap-10 px-5 pb-24 pt-4 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:pb-20"
       >
         {/* Copy column */}

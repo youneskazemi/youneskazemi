@@ -13,7 +13,7 @@ export function Process() {
 
   return (
     <Section id="process" title={t.processTitle} subtitle={t.processSubtitle}>
-      <ParallaxBlock speed={0.08}>
+      <ParallaxBlock speed={0.22}>
         <ol className="relative grid gap-4 md:grid-cols-3 md:gap-5">
           <div
             className="pointer-events-none absolute start-[1.15rem] top-4 bottom-4 w-px bg-gradient-to-b from-sky-400/40 via-white/10 to-transparent md:hidden"

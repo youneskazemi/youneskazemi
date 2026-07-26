@@ -9,6 +9,8 @@ import {
   type Project,
 } from "@/content/projects";
 import { BrowserFrame } from "@/components/BrowserFrame";
+import { ParallaxMedia } from "@/components/Parallax";
+import { MaskRise } from "@/components/Section";
 import { useI18n } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
 
@@ -73,23 +75,36 @@ function CaseStudy({
           <Link
             href={`/projects/${project.slug}`}
             className="relative block rounded-[0.875rem] outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+            style={{ perspective: 1400 }}
             aria-label={`${title} — ${t.details}`}
           >
-            <BrowserFrame
-              url={project.href}
-              className="transition duration-500 ease-out group-hover:-translate-y-1"
+            {/* Frame settles flat as it enters — the workbench being set down */}
+            <motion.div
+              initial={reduce ? false : { rotateX: 5, y: 14, opacity: 0.85 }}
+              whileInView={{ rotateX: 0, y: 0, opacity: 1 }}
+              viewport={{ once: true, margin: "-15%" }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              style={{ transformOrigin: "50% 100%" }}
             >
-              <div className="relative aspect-[16/10] overflow-hidden bg-[#0c0c12]">
-                <Image
-                  src={project.image}
-                  alt={title}
-                  fill
-                  className="object-cover object-top transition duration-700 ease-out group-hover:scale-[1.025]"
-                  sizes="(max-width: 1024px) 100vw, 58vw"
-                  priority={index === 0}
-                />
-              </div>
-            </BrowserFrame>
+              <BrowserFrame
+                url={project.href}
+                className="transition duration-500 ease-out group-hover:-translate-y-1"
+              >
+                <ParallaxMedia
+                  className="aspect-[16/10] bg-[#0c0c12]"
+                  amount={10}
+                >
+                  <Image
+                    src={project.image}
+                    alt={title}
+                    fill
+                    className="object-cover object-top transition duration-700 ease-out group-hover:scale-[1.025]"
+                    sizes="(max-width: 1024px) 100vw, 58vw"
+                    priority={index === 0}
+                  />
+                </ParallaxMedia>
+              </BrowserFrame>
+            </motion.div>
           </Link>
         </div>
 
@@ -115,12 +130,14 @@ function CaseStudy({
           </div>
 
           <h3 className="text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl sm:leading-tight">
-            <Link
-              href={`/projects/${project.slug}`}
-              className="underline-offset-4 transition hover:text-white hover:underline hover:decoration-sky-400/50"
-            >
-              {title}
-            </Link>
+            <MaskRise>
+              <Link
+                href={`/projects/${project.slug}`}
+                className="underline-offset-4 transition hover:text-white hover:underline hover:decoration-sky-400/50"
+              >
+                {title}
+              </Link>
+            </MaskRise>
           </h3>
 
           <p className="mt-4 max-w-md text-base leading-relaxed text-zinc-300 sm:text-[1.05rem] sm:leading-relaxed">
@@ -176,37 +193,37 @@ export function WorkShowcase() {
       className="section-pad scroll-mt-24"
     >
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-6">
-        <motion.header
-          className="mb-14 flex max-w-3xl flex-col gap-5 sm:mb-16 lg:mb-20 lg:max-w-none lg:flex-row lg:items-end lg:justify-between"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        >
+        <header className="mb-14 flex max-w-3xl flex-col gap-5 sm:mb-16 lg:mb-20 lg:max-w-none lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
             <h2 className="text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl sm:leading-tight">
-              {t.workTitle}
+              <MaskRise>{t.workTitle}</MaskRise>
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-zinc-300 sm:text-lg">
-              {t.workSubtitle}
-            </p>
-            {total > list.length && (
-              <p className="mt-2 text-sm text-zinc-400">{t.moreOnAllWork}</p>
-            )}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-12%" }}
+              transition={{ duration: 0.5, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <p className="mt-4 text-base leading-relaxed text-zinc-300 sm:text-lg">
+                {t.workSubtitle}
+              </p>
+              {total > list.length && (
+                <p className="mt-2 text-sm text-zinc-400">{t.moreOnAllWork}</p>
+              )}
+            </motion.div>
           </div>
           <Link href="/projects" className="btn-secondary shrink-0">
             {viewAllLabel}
           </Link>
-        </motion.header>
+        </header>
 
         <div className="flex flex-col">
           {list.map((project, i) => (
             <div key={project.slug}>
-              <CaseStudy
-                project={project}
-                index={i}
-                reverse={i % 2 === 1}
-              />
+              {/* Alternating indent — bench layout, not a stacked grid */}
+              <div className={cn(i % 2 === 1 && "lg:ps-10 xl:ps-16")}>
+                <CaseStudy project={project} index={i} reverse={i % 2 === 1} />
+              </div>
               {i < list.length - 1 && (
                 <div
                   className="my-16 h-px w-full bg-gradient-to-r from-transparent via-white/12 to-transparent sm:my-20 lg:my-24"

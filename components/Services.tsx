@@ -28,12 +28,7 @@ export function Services() {
           >
             <div
               className="pointer-events-none absolute -end-10 -top-10 h-40 w-40 rounded-full blur-3xl"
-              style={{
-                background:
-                  i === 0
-                    ? "rgba(244, 114, 182, 0.12)"
-                    : "rgba(56, 189, 248, 0.14)",
-              }}
+              style={{ background: "rgba(56, 189, 248, 0.12)" }}
               aria-hidden
             />
             <p className="font-mono text-sm tabular-nums text-zinc-400">
