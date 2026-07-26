@@ -69,6 +69,14 @@ p {
   text-wrap: pretty;
 }
 
+/* Persian sits on a taller line than Latin — 1.625 crowds the descenders.
+   Applies only to RTL so English keeps the token leading. */
+[dir="rtl"] p,
+[dir="rtl"] li,
+[dir="rtl"] dd {
+  line-height: 1.85;
+}
+
 ::selection {
   background: rgba(56, 189, 248, 0.35);
   color: #fff;
