@@ -89,17 +89,23 @@ function ProjectTile({
           {summary}
         </p>
         <div className="mt-4 flex flex-wrap items-center gap-2">
-          <a
-            href={project.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center text-sm font-semibold text-sky-300 transition hover:text-sky-200"
-          >
-            {t.live} ↗
-          </a>
+          {!project.offline && (
+            <a
+              href={project.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center text-sm font-semibold text-sky-300 transition hover:text-sky-200"
+            >
+              {t.live} ↗
+            </a>
+          )}
           <Link
             href={`/projects/${project.slug}`}
-            className="inline-flex min-h-11 items-center px-2 text-sm font-medium text-zinc-400 transition hover:text-zinc-200"
+            className={
+              project.offline
+                ? "inline-flex min-h-11 items-center text-sm font-semibold text-sky-300 transition hover:text-sky-200"
+                : "inline-flex min-h-11 items-center px-2 text-sm font-medium text-zinc-400 transition hover:text-zinc-200"
+            }
           >
             {t.details}
           </Link>

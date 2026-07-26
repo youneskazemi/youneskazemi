@@ -156,18 +156,20 @@ function CaseStudy({
           </ul>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a
-              href={project.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary"
-            >
-              {t.live}
-              <ExternalIcon />
-            </a>
+            {!project.offline && (
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
+              >
+                {t.live}
+                <ExternalIcon />
+              </a>
+            )}
             <Link
               href={`/projects/${project.slug}`}
-              className="btn-secondary"
+              className={project.offline ? "btn-primary" : "btn-secondary"}
             >
               {t.details}
             </Link>

@@ -195,18 +195,24 @@ export function ProjectCard({
             featured ? "pt-8" : "pt-5",
           )}
         >
-          <a
-            href={project.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary min-w-[7.5rem]"
-          >
-            {t.live}
-            <ExternalIcon />
-          </a>
+          {!project.offline && (
+            <a
+              href={project.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary min-w-[7.5rem]"
+            >
+              {t.live}
+              <ExternalIcon />
+            </a>
+          )}
           <Link
             href={`/projects/${project.slug}`}
-            className="inline-flex h-11 items-center gap-1.5 rounded-full px-3 text-sm font-medium text-zinc-300 transition hover:text-white"
+            className={
+              project.offline
+                ? "btn-primary min-w-[7.5rem]"
+                : "inline-flex h-11 items-center gap-1.5 rounded-full px-3 text-sm font-medium text-zinc-300 transition hover:text-white"
+            }
           >
             {t.details}
             <ArrowIcon className="transition rtl:rotate-180 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />

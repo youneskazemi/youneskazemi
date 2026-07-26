@@ -14,6 +14,8 @@ export type Project = {
   body: string;
   bodyFa: string;
   year?: string;
+  /** Domain no longer resolves — keep the case study, drop the outbound link. */
+  offline?: boolean;
 };
 
 /**
@@ -129,6 +131,7 @@ export const projects: Project[] = [
     accent: "#60a5fa",
     stack: ["Next.js / Web", "AI APIs", "Dashboard"],
     year: "2025",
+    offline: true,
     body: "Rayan AI is a dark SaaS-style product for Persian users: advanced search, voice-to-notes, text generation, and developer-oriented tools with a clean tool grid.",
     bodyFa:
       "رایان AI محصولی با حس SaaS تیره برای کاربران فارسی است: جستجوی پیشرفته، ویس به جزوه، تولید متن و ابزارهای کاربردی با شبکه ابزار تمیز.",

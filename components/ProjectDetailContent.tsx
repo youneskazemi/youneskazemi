@@ -44,14 +44,21 @@ export function ProjectDetailContent({ project }: { project: Project }) {
         </ul>
       </div>
 
-      <a
-        href={project.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="btn-primary mt-8"
-      >
-        {t.visitSite} ↗
-      </a>
+      {/* Offline projects keep the case study but must not dead-end (PRODUCT.md #5) */}
+      {project.offline ? (
+        <a href="/#contact" className="btn-primary mt-8">
+          {t.ctaContact}
+        </a>
+      ) : (
+        <a
+          href={project.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-primary mt-8"
+        >
+          {t.visitSite} ↗
+        </a>
+      )}
     </article>
   );
 }
