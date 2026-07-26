@@ -40,6 +40,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# local screenshots
+# local screenshots / browser-automation scratch
 portfolio-desktop-hero.png
+/work-1300.png
+.playwright-mcp/
+
+# windows/cygwin crash dumps
+*.stackdump
 
