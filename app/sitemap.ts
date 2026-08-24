@@ -1,20 +1,42 @@
+import { execFileSync } from "node:child_process";
 import type { MetadataRoute } from "next";
 import { projects } from "@/content/projects";
 import { absoluteUrl } from "@/lib/seo";
 
+/**
+ * Last commit date for a source file. `lastmod` is the only sitemap hint
+ * Google still reads, and it only trusts it if it stays put between builds —
+ * stamping `new Date()` on every URL every deploy makes it worthless.
+ * ponytail: shallow clones and missing .git fall back to build time.
+ */
+const buildTime = new Date();
+
+function lastCommit(path: string): Date {
+  try {
+    const iso = execFileSync("git", ["log", "-1", "--format=%cI", "--", path], {
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"],
+    }).trim();
+    return iso ? new Date(iso) : buildTime;
+  } catch {
+    return buildTime;
+  }
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  const pagesUpdated = lastCommit("app/page.tsx");
+  const projectsUpdated = lastCommit("content/projects.ts");
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: absoluteUrl("/"),
-      lastModified: now,
+      lastModified: pagesUpdated,
       changeFrequency: "weekly",
       priority: 1,
     },
     {
       url: absoluteUrl("/projects"),
-      lastModified: now,
+      lastModified: projectsUpdated,
       changeFrequency: "weekly",
       priority: 0.9,
     },
@@ -22,7 +44,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const projectRoutes: MetadataRoute.Sitemap = projects.map((p) => ({
     url: absoluteUrl(`/projects/${p.slug}`),
-    lastModified: now,
+    lastModified: projectsUpdated,
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
