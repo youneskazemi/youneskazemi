@@ -205,7 +205,7 @@ export function ProjectsIndex({ initialProjects }: { initialProjects?: Project[]
           <div className="mb-10 space-y-4">
             {/* Search Input */}
             <div className="relative max-w-md">
-              <div className="pointer-events-none absolute inset-y-0 left-3.5 flex items-center text-zinc-500" aria-hidden>
+              <div className="pointer-events-none absolute inset-y-0 left-3.5 flex items-center text-zinc-400" aria-hidden>
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
@@ -215,13 +215,13 @@ export function ProjectsIndex({ initialProjects }: { initialProjects?: Project[]
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t.searchPlaceholder}
-                className="w-full rounded-full border border-white/10 bg-white/[0.03] py-2.5 pl-10 pr-10 text-sm text-zinc-100 placeholder-zinc-500 outline-none transition focus:border-sky-400 focus:bg-white/[0.05] focus:ring-1 focus:ring-sky-400"
+                className="h-11 w-full rounded-full border border-white/10 bg-white/[0.03] pl-10 pr-10 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none transition focus:border-sky-400 focus:bg-white/[0.05] focus:ring-1 focus:ring-sky-400"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
-                  className="absolute inset-y-0 right-3.5 flex items-center text-xs text-zinc-500 hover:text-zinc-300"
+                  className="absolute inset-y-0 right-2 flex h-11 w-9 items-center justify-center text-xs text-zinc-400 hover:text-zinc-200"
                   aria-label="Clear search query"
                 >
                   ✕
@@ -229,7 +229,7 @@ export function ProjectsIndex({ initialProjects }: { initialProjects?: Project[]
               )}
             </div>
 
-            {/* Filter Pills with real counts */}
+            {/* Filter Pills with real counts (44px touch targets) */}
             <div
               className="flex flex-wrap gap-2"
               role="tablist"
@@ -248,17 +248,17 @@ export function ProjectsIndex({ initialProjects }: { initialProjects?: Project[]
                     aria-selected={active}
                     onClick={() => setFilter(f.id)}
                     className={cn(
-                      "inline-flex h-10 items-center gap-1.5 rounded-full px-3.5 text-xs font-medium transition",
+                      "inline-flex h-11 items-center gap-2 rounded-full px-4 text-sm font-medium transition",
                       active
                         ? "bg-sky-400 text-black shadow-md shadow-sky-400/20"
-                        : "border border-white/10 bg-white/[0.03] text-zinc-400 hover:border-white/20 hover:text-zinc-200",
+                        : "border border-white/10 bg-white/[0.03] text-zinc-300 hover:border-white/20 hover:text-white",
                     )}
                   >
                     <span>{isFa ? f.labelFa : f.label}</span>
                     <span
                       className={cn(
-                        "rounded-full px-1.5 py-0.2 text-[10px] font-mono",
-                        active ? "bg-black/20 text-black font-bold" : "bg-white/5 text-zinc-500"
+                        "rounded-full px-2 py-0.5 text-xs font-mono",
+                        active ? "bg-black/20 text-black font-bold" : "bg-white/10 text-zinc-400"
                       )}
                     >
                       {count}

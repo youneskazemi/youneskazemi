@@ -113,14 +113,14 @@ export function ProjectGallery({ gallery, title, titleFa, accent = "#38bdf8" }: 
           </div>
         </BrowserFrame>
 
-        {/* Previous / Next overlay buttons on main preview if > 1 image */}
+        {/* Previous / Next overlay buttons on main preview if > 1 image (44px touch) */}
         {gallery.length > 1 && (
           <>
             <button
               type="button"
               onClick={handlePrev}
               aria-label="Previous image"
-              className="absolute left-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-black/70 text-white backdrop-blur-md transition hover:bg-black hover:scale-110 ring-1 ring-white/20"
+              className="absolute left-3 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full bg-black/80 text-xl text-white backdrop-blur-md transition hover:bg-black hover:scale-105 ring-1 ring-white/20"
             >
               ‹
             </button>
@@ -128,7 +128,7 @@ export function ProjectGallery({ gallery, title, titleFa, accent = "#38bdf8" }: 
               type="button"
               onClick={handleNext}
               aria-label="Next image"
-              className="absolute right-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-black/70 text-white backdrop-blur-md transition hover:bg-black hover:scale-110 ring-1 ring-white/20"
+              className="absolute right-3 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full bg-black/80 text-xl text-white backdrop-blur-md transition hover:bg-black hover:scale-105 ring-1 ring-white/20"
             >
               ›
             </button>
@@ -147,7 +147,7 @@ export function ProjectGallery({ gallery, title, titleFa, accent = "#38bdf8" }: 
                 type="button"
                 onClick={() => setSelectedIndex(idx)}
                 aria-label={`Select screenshot ${idx + 1}`}
-                className={`group relative h-16 w-24 flex-shrink-0 overflow-hidden rounded-xl border transition-all duration-200 ${
+                className={`group relative h-16 w-24 flex-shrink-0 overflow-hidden rounded-[0.875rem] border transition-all duration-200 ${
                   isSelected
                     ? "border-sky-400 ring-2 ring-sky-400/40 shadow-lg shadow-sky-400/10 scale-105"
                     : "border-white/10 opacity-60 hover:opacity-100 hover:border-white/30"

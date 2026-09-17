@@ -58,13 +58,13 @@ export default async function ProjectPage({ params }: Props) {
           <div className="mt-10 flex flex-wrap gap-4">
             <Link
               href="/projects"
-              className="text-sm text-zinc-400 transition hover:text-sky-300"
+              className="inline-flex min-h-11 items-center text-sm text-zinc-400 transition hover:text-sky-300"
             >
               ← All work
             </Link>
             <Link
               href="/#work"
-              className="text-sm text-zinc-500 transition hover:text-sky-300"
+              className="inline-flex min-h-11 items-center text-sm text-zinc-500 transition hover:text-sky-300"
             >
               Home
             </Link>
