@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProjectBySlug, getProjects } from "@/lib/db/projects";
 import { BrowserFrame } from "@/components/BrowserFrame";
@@ -8,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
 import { Navbar } from "@/components/Navbar";
 import { ProjectDetailContent } from "@/components/ProjectDetailContent";
+import { ProjectPagination } from "@/components/ProjectPagination";
 import { projectJsonLd, projectMeta } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -30,8 +30,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProjectPage({ params }: Props) {
   const { slug } = await params;
-  const project = await getProjectBySlug(slug);
+  const [project, allProjects] = await Promise.all([
+    getProjectBySlug(slug),
+    getProjects(),
+  ]);
   if (!project) notFound();
+
+  const currentIndex = allProjects.findIndex((p) => p.slug === slug);
+  const prevProject =
+    currentIndex > 0
+      ? allProjects[currentIndex - 1]
+      : allProjects.length > 1
+      ? allProjects[allProjects.length - 1]
+      : null;
+  const nextProject =
+    currentIndex < allProjects.length - 1
+      ? allProjects[currentIndex + 1]
+      : allProjects.length > 1
+      ? allProjects[0]
+      : null;
 
   return (
     <>
@@ -55,20 +72,10 @@ export default async function ProjectPage({ params }: Props) {
             </BrowserFrame>
           </div>
           <ProjectDetailContent project={project} />
-          <div className="mt-10 flex flex-wrap gap-4">
-            <Link
-              href="/projects"
-              className="inline-flex min-h-11 items-center text-sm text-zinc-400 transition hover:text-sky-300"
-            >
-              ← All work
-            </Link>
-            <Link
-              href="/#work"
-              className="inline-flex min-h-11 items-center text-sm text-zinc-500 transition hover:text-sky-300"
-            >
-              Home
-            </Link>
-          </div>
+          <ProjectPagination
+            prevProject={prevProject}
+            nextProject={nextProject}
+          />
         </div>
       </main>
       <Footer />

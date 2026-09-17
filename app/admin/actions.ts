@@ -183,3 +183,13 @@ export async function reorderProjectAction(id: string, direction: "up" | "down")
   redirect("/admin");
 }
 
+export async function deleteInquiryAction(id: string) {
+  const isAdmin = await checkIsAdmin();
+  if (!isAdmin) throw new Error("Unauthorized");
+
+  const { deleteInquiry } = await import("@/lib/db/inquiries");
+  await deleteInquiry(id);
+  revalidatePath("/admin");
+  redirect("/admin?tab=inquiries");
+}
+
