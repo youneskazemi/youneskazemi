@@ -30,19 +30,57 @@ export const projects: Project[] = [
     title: "Latorin",
     titleFa: "لاتورین",
     href: "https://latorin.ir",
-    tags: ["Custom", "Next.js", "EdTech"],
+    tags: ["Custom", "Next.js", "EdTech", "AI"],
     summary:
-      "IELTS practice platform — real exam flow, Speaking with AI, scores and feedback.",
+      "Interactive AI IELTS prep platform — live conversational speaking examiner, Full Mock simulations, and diagnostic feedback.",
     summaryFa:
-      "پلتفرم تمرین آیلتس — جریان آزمون واقعی، Speaking با هوش مصنوعی، نمره و بازخورد.",
+      "پلتفرم هوشمند آمادگی آزمون آیلتس — مصاحبه‌گر صوتی زنده با هوش مصنوعی، شبیه‌سازی آزمون کامل هر ۴ مهارت و کارنامه تشخیصی.",
     image: "/projects/covers/latorin.jpg",
     featured: true,
     accent: "#10b981",
-    stack: ["Next.js", "React", "AI", "API"],
-    year: "2025",
-    body: "Latorin is a custom product for IELTS candidates: pick skills, practice under exam-like conditions, and get structured feedback — especially live Speaking with AI.",
+    stack: ["Next.js", "React", "Web Audio API", "Conversational AI"],
+    year: "2026",
+    body: "Latorin (latorin.ir) is a full-featured AI-driven IELTS training product: users engage in real-time conversational speaking practice with an intelligent virtual examiner, take Full Mock exams covering Speaking, Reading, Listening, and Writing under authentic timed conditions, and receive instant rubric-aligned band scores with pinpoint feedback.",
     bodyFa:
-      "لاتورین محصول اختصاصی برای داوطلبان آیلتس است: انتخاب مهارت، تمرین شبیه آزمون واقعی، و بازخورد ساخت‌یافته — به‌ویژه Speaking زنده با هوش مصنوعی.",
+      "لاتورین (latorin.ir) پلتفرم تخصصی مبتنی بر هوش مصنوعی برای داوطلبان آیلتس است: امکان گفت‌وگوی زنده صوتی با مصاحبه‌گر هوشمند، شبیه‌سازی آزمون فول ماک هر چهار مهارت (Speaking، Reading، Listening، Writing) در شرایط استاندارد آزمون، و دریافت نمره دقیق بند اسکور همراه با تحلیل نقاط ضعف و راهکار بهبود.",
+  },
+  {
+    slug: "sorkhdan",
+    title: "Sorkhdan",
+    titleFa: "سرخدان",
+    href: "https://sorkhdan.ir",
+    tags: ["PWA", "Next.js", "E-commerce", "Direct-from-Farm"],
+    summary:
+      "Direct-from-farm Qaenat saffron & barberry PWA with instant offline access, dosage calculator, and lab certificates.",
+    summaryFa:
+      "پلتفرم فروشگاهی PWA زعفران و زرشک قائنات — خرید مستقیم از کشاورز، وب‌اپ نصب‌شونده، محاسبه‌گر هوشمند مقدار مصرف و شناسنامه آزمایشگاهی.",
+    image: "/projects/covers/sorkhdan.jpg",
+    featured: true,
+    accent: "#e11d48",
+    stack: ["Next.js", "PWA / Webmanifest", "TypeScript", "Tailwind CSS"],
+    year: "2026",
+    body: "Sorkhdan (sorkhdan.ir) is a high-performance Progressive Web Application (PWA) delivering authentic Qaenat saffron and Birjand barberry directly from farmers to households. Built with Next.js App Router and a rich PWA architecture, it features instant mobile homescreen installation, web push order notifications, lab testing certification (Crocin 268+), an interactive saffron dosage calculator, ice-shock brewing interactive guide, and ultra-fast frictionless checkout with complete parcel tracking.",
+    bodyFa:
+      "سرخدان (sorkhdan.ir) یک وب‌اپلیکیشن پیش‌رونده (PWA) با عملکرد فوق‌سریع است که زعفران اصیل قائنات و زرشک پفکی بیرجند را بی‌واسطه از مزرعه به دست مصرف‌کننده می‌رساند. این پروژه با Next.js App Router و معماری مدرن PWA توسعه یافته و شامل قابلیت نصب مستقیم روی صفحه اصلی گوشی، اعلان‌های وب هوشمند وضعیت سفارش، نمایش شناسنامه آزمایشگاهی با عیار کروسین ۲۶۸+، ابزار تعاملی محاسبه مقدار مصرف مورد نیاز، راهنمای دم‌آوری با شوک یخ، و فرآیند خرید سریع با رهگیری پستی مرسوله است.",
+  },
+  {
+    slug: "ekramshop",
+    title: "Ekram Shop",
+    titleFa: "اکرام شاپ",
+    href: "https://ekramshop.com",
+    tags: ["SEO", "Technical SEO", "B2B E-commerce", "HVAC"],
+    summary:
+      "Technical SEO architecture and e-commerce platform for industrial refrigeration, copper tubing, and HVAC equipment.",
+    summaryFa:
+      "پروژه جامع سئو فنی و فروشگاه آنلاین تجهیزات برودتی و صنعتی — ابزار آنلاین استعلام قیمت مس، ساختار دسته‌بندی سئو‌محور و رتبه‌گیری در کلمات کلیدی رقابتی.",
+    image: "/projects/covers/ekramshop.jpg",
+    featured: true,
+    accent: "#ea580c",
+    stack: ["Technical SEO", "Semantic Schema", "E-commerce", "Market Price Tool"],
+    year: "2026",
+    body: "Ekram Shop (ekramshop.com) is a commercial e-commerce platform specializing in industrial refrigeration equipment, copper pipes, elastomeric insulation, compressors, and refrigerant gases. Younes engineered a data-driven technical SEO strategy: built custom interactive copper pipe price calculators, resolved faceted filter index bloat, implemented granular Schema.org JSON-LD microdata, and created targeted B2B wholesale conversion funnels, resulting in dominant organic SERP rankings across competitive industrial cooling and HVAC queries in Iran.",
+    bodyFa:
+      "اکرام شاپ (ekramshop.com) یک پلتفرم فروشگاهی و تخصصی در حوزه تجهیزات برودتی، لوله‌های مسی، عایق الاستومری، گازهای مبرد و کمپرسورهای صنعتی است. یونس در این پروژه معماری سئوی فنی (Technical SEO) همه‌جانبه‌ای پیاده‌سازی کرد: توسعه ابزار تعاملی محاسبه آنلاین قیمت لوله مسی و تحلیل روند بازار مس، بهینه‌سازی ساختار دسته‌بندی‌ها و رفع مشکلات کنیبالیزیشن فیلترها، نشانه‌گذاری غنی داده‌های ساختاریافته (Schema.org)، و ایجاد مسیرهای تبدیل سفارش عمده B2B که منجر به کسب جایگاه‌های برتر گوگل در کلمات پرترافیک حوزه برودت و تأسیسات کشور شد.",
   },
   {
     slug: "apex78",
@@ -163,19 +201,19 @@ export const projects: Project[] = [
     title: "JR Fit",
     titleFa: "جی‌آر فیت",
     href: "https://jrfit.ir",
-    tags: ["WordPress", "Fitness", "Store"],
+    tags: ["WordPress", "Fitness", "Store", "Coaching"],
     summary:
-      "Fitness brand site & shop — supplements, programs, and gym services.",
+      "Fitness brand platform & nutrition store — personalized coaching programs, plan selector, and member transformations.",
     summaryFa:
-      "سایت و فروشگاه برند تناسب‌اندام — مکمل، برنامه تمرینی و خدمات باشگاه.",
+      "سایت و فروشگاه تخصصی فیتنس — مربیگری آنلاین، پرسشنامه هوشمند انتخاب پلن، گالری تغییرات اعضا و مکمل‌های ورزشی.",
     image: "/projects/covers/jrfit.jpg",
     featured: true,
     accent: "#3b82f6",
-    stack: ["WordPress", "WooCommerce", "Marketing"],
-    year: "2024",
-    body: "JR Fit combines e‑commerce for sports nutrition with training programs and brand storytelling on a dark, high-energy UI.",
+    stack: ["WordPress", "WooCommerce", "Plan Selector", "Marketing"],
+    year: "2026",
+    body: "JR Fit (jrfit.ir) is a premier fitness and online coaching platform combining tailored workout and nutrition plans with an e-commerce shop for authentic sports supplements. It features a smart quiz guiding users to their ideal coaching tier, high-energy athlete transformation showcases, event registrations, and seamless WooCommerce ordering.",
     bodyFa:
-      "جی‌آر فیت فروشگاه مکمل ورزشی را با برنامه تمرینی و استوری برند روی UI تیره و پرانرژی ترکیب می‌کند.",
+      "جی‌آر فیت (jrfit.ir) پلتفرم جامع تناسب اندام و کوچینگ آنلاین است که برنامه‌های اختصاصی تمرین و تغذیه را با فروشگاه مکمل‌های ورزشی اورجینال ترکیب می‌کند. این وب‌سایت دارای سیستم پرسشنامه هوشمند انتخاب سطح پلن، ویترین نتایج واقعی و تغییرات بدنی اعضا، ثبت‌نام ایونت‌های ورزشی و فرآیند سریع خرید آنلاین است.",
   },
   {
     slug: "avcafebakery",
@@ -200,10 +238,12 @@ export const projects: Project[] = [
 
 /**
  * Full catalog order.
- * User: latorin → jrfit → apex78 → gallerychiic → ticktom → rimelcosmetics → …
+ * Flagship showcases: latorin → sorkhdan → ekramshop → jrfit → ...
  */
 export const recentSlugs = [
   "latorin",
+  "sorkhdan",
+  "ekramshop",
   "jrfit",
   "avcafebakery",
   "apex78",
@@ -215,7 +255,7 @@ export const recentSlugs = [
 ] as const;
 
 /** How many case studies to show on the landing page before “View all”. */
-export const HOME_SHOWCASE_COUNT = 3;
+export const HOME_SHOWCASE_COUNT = 4;
 
 export function getProject(slug: string) {
   return projects.find((p) => p.slug === slug);

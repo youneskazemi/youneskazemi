@@ -4,18 +4,28 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
+import { useActiveSection } from "@/lib/useActiveSection";
 
 export function MobileBottomBar() {
   const pathname = usePathname();
   const { isFa, toggleLang, lang } = useI18n();
+  const activeSection = useActiveSection();
 
   // Hide on admin routes
   if (pathname.startsWith("/admin")) {
     return null;
   }
 
-  const isProjects = pathname.startsWith("/projects");
-  const isHome = pathname === "/";
+  const isProjectsPage = pathname.startsWith("/projects");
+  const isHomeActive = pathname === "/" && (activeSection === "top" || !activeSection);
+  const isWorkActive = isProjectsPage || (pathname === "/" && activeSection === "projects");
+  const isServicesActive =
+    pathname === "/" &&
+    (activeSection === "services" ||
+      activeSection === "skills" ||
+      activeSection === "process" ||
+      activeSection === "about");
+  const isContactActive = pathname === "/" && activeSection === "contact";
 
   return (
     <div
@@ -28,61 +38,124 @@ export function MobileBottomBar() {
         <Link
           href="/#top"
           className={cn(
-            "flex min-h-[44px] flex-1 flex-col items-center justify-center gap-1 rounded-xl py-1 text-[11px] font-medium transition active:scale-90",
-            isHome && !isProjects
+            "relative flex min-h-[44px] flex-1 flex-col items-center justify-center gap-1 rounded-xl py-1 text-[11px] font-medium transition active:scale-90",
+            isHomeActive
               ? "text-sky-400 font-semibold"
-              : "text-zinc-400 hover:text-zinc-200"
+              : "text-zinc-400 hover:text-zinc-200",
           )}
           aria-label={isFa ? "خانه" : "Home"}
+          aria-current={isHomeActive ? "page" : undefined}
         >
-          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={isHome && !isProjects ? 2.2 : 1.8}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          <svg
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={isHomeActive ? 2.2 : 1.8}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+            />
           </svg>
           <span>{isFa ? "خانه" : "Home"}</span>
+          {isHomeActive && (
+            <span className="absolute -top-1 h-1 w-1 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,1)]" />
+          )}
         </Link>
 
         {/* 2. Projects Catalog */}
         <Link
-          href="/projects"
+          href="/#projects"
           className={cn(
             "relative flex min-h-[44px] flex-1 flex-col items-center justify-center gap-1 rounded-xl py-1 text-[11px] font-medium transition active:scale-90",
-            isProjects
+            isWorkActive
               ? "text-sky-400 font-semibold"
-              : "text-zinc-400 hover:text-zinc-200"
+              : "text-zinc-400 hover:text-zinc-200",
           )}
-          aria-label={isFa ? "همه نمونه‌کارها" : "Projects"}
+          aria-label={isFa ? "نمونه‌کارها" : "Projects"}
+          aria-current={isWorkActive ? "page" : undefined}
         >
-          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={isProjects ? 2.2 : 1.8}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+          <svg
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={isWorkActive ? 2.2 : 1.8}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+            />
           </svg>
           <span>{isFa ? "پروژه‌ها" : "Work"}</span>
-          {isProjects && (
-            <span className="absolute -top-1 h-1 w-1 rounded-full bg-sky-400" />
+          {isWorkActive && (
+            <span className="absolute -top-1 h-1 w-1 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,1)]" />
           )}
         </Link>
 
         {/* 3. Services / Phased Work */}
         <Link
           href="/#services"
-          className="flex min-h-[44px] flex-1 flex-col items-center justify-center gap-1 rounded-xl py-1 text-[11px] font-medium text-zinc-400 transition hover:text-zinc-200 active:scale-90"
+          className={cn(
+            "relative flex min-h-[44px] flex-1 flex-col items-center justify-center gap-1 rounded-xl py-1 text-[11px] font-medium transition active:scale-90",
+            isServicesActive
+              ? "text-sky-400 font-semibold"
+              : "text-zinc-400 hover:text-zinc-200",
+          )}
           aria-label={isFa ? "خدمات و فازها" : "Services"}
+          aria-current={isServicesActive ? "page" : undefined}
         >
-          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          <svg
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={isServicesActive ? 2.2 : 1.8}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M13 10V3L4 14h7v7l9-11h-7z"
+            />
           </svg>
           <span>{isFa ? "خدمات" : "Services"}</span>
+          {isServicesActive && (
+            <span className="absolute -top-1 h-1 w-1 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,1)]" />
+          )}
         </Link>
 
         {/* 4. Contact CTA */}
         <Link
           href="/#contact"
-          className="flex min-h-[44px] flex-1 flex-col items-center justify-center gap-1 rounded-xl py-1 text-[11px] font-medium text-zinc-400 transition hover:text-sky-300 active:scale-90"
+          className={cn(
+            "relative flex min-h-[44px] flex-1 flex-col items-center justify-center gap-1 rounded-xl py-1 text-[11px] font-medium transition active:scale-90",
+            isContactActive
+              ? "text-sky-400 font-semibold"
+              : "text-zinc-400 hover:text-sky-300",
+          )}
           aria-label={isFa ? "تماس و شروع پروژه" : "Contact"}
+          aria-current={isContactActive ? "page" : undefined}
         >
-          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          <svg
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={isContactActive ? 2.2 : 1.8}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+            />
           </svg>
           <span>{isFa ? "تماس" : "Contact"}</span>
+          {isContactActive && (
+            <span className="absolute -top-1 h-1 w-1 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,1)]" />
+          )}
         </Link>
 
         {/* 5. Language Toggle Button */}

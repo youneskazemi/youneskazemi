@@ -184,18 +184,19 @@ function CaseStudy({
 export function WorkShowcase({ projects }: { projects?: Project[] } = {}) {
   const { t } = useI18n();
   const list = projects
-    ? projects.filter((p) => p.featured).slice(0, 3)
-    : getHomeShowcaseProjects();
+    ? projects.filter((p) => p.featured).slice(0, 4)
+    : getHomeShowcaseProjects(4);
   const total = projects ? projects.length : getOrderedProjects().length;
   const viewAllLabel = t.viewAllWorkCount.replace("{n}", String(total));
 
   return (
     <section
-      id="work"
+      id="projects"
       data-snap-section=""
-      data-snap-label="Work"
-      className="section-pad scroll-mt-24"
+      data-snap-label="Projects"
+      className="section-pad scroll-mt-24 relative"
     >
+      <div id="work" className="absolute -top-24" aria-hidden />
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-6">
         {/* Header rides along as a sticky rail while the case studies scroll */}
         <div className="lg:grid lg:grid-cols-[13rem_1fr] lg:gap-10 xl:grid-cols-[15rem_1fr] xl:gap-14">

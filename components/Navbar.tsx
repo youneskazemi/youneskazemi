@@ -2,17 +2,21 @@
 
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Logo } from "@/components/Logo";
 import { navLinks, site } from "@/content/site";
 import { useI18n } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
+import { useActiveSection } from "@/lib/useActiveSection";
 
 export function Navbar() {
   const { t, isFa, toggleLang, lang } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { scrollY } = useScroll();
+  const pathname = usePathname();
+  const activeSection = useActiveSection();
 
   useMotionValueEvent(scrollY, "change", (v) => {
     setScrolled(v > 24);
@@ -69,16 +73,39 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden items-center gap-0.5 md:flex" aria-label="Main">
-            {navLinks.map((link) => (
-              <a
-                key={link.id}
-                href={link.href}
-                className="inline-flex min-h-11 items-center rounded-lg px-3 text-sm text-zinc-400 transition hover:bg-white/5 hover:text-zinc-100"
-              >
-                {isFa ? link.labelFa : link.label}
-              </a>
-            ))}
+          <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
+            {navLinks.map((link) => {
+              const isAllWork = link.id === "all-work";
+              const isProjectsSec = link.id === "work";
+              const isActive = isAllWork
+                ? pathname.startsWith("/projects")
+                : pathname === "/" &&
+                  (activeSection === link.id ||
+                    (isProjectsSec &&
+                      (activeSection === "work" || activeSection === "projects")));
+
+              return (
+                <a
+                  key={link.id}
+                  href={link.href}
+                  aria-current={isActive ? "page" : undefined}
+                  className={cn(
+                    "relative inline-flex min-h-10 items-center rounded-lg px-3 text-sm transition-all duration-200",
+                    isActive
+                      ? "font-medium text-sky-300 bg-sky-500/10 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.25)]"
+                      : "text-zinc-400 hover:bg-white/5 hover:text-zinc-100",
+                  )}
+                >
+                  {isFa ? link.labelFa : link.label}
+                  {isActive && (
+                    <span
+                      className="absolute -bottom-1 inset-x-2.5 h-0.5 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]"
+                      aria-hidden
+                    />
+                  )}
+                </a>
+              );
+            })}
           </nav>
 
           {/* Header Controls (Desktop CTA, Language Toggle & Mobile Hamburger) */}
@@ -181,22 +208,44 @@ export function Navbar() {
             {/* Scrollable Links Container */}
             <div className="flex-1 overflow-y-auto px-5 py-6">
               <nav className="flex flex-col gap-1.5" aria-label="Mobile Navigation">
-                {navLinks.map((link, idx) => (
-                  <motion.a
-                    key={link.id}
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    initial={{ opacity: 0, x: isFa ? 12 : -12 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.04, duration: 0.25 }}
-                    className="flex min-h-[52px] items-center justify-between rounded-xl px-4 py-3.5 text-base font-medium text-zinc-200 transition hover:bg-white/5 hover:text-white active:bg-white/10"
-                  >
-                    <span>{isFa ? link.labelFa : link.label}</span>
-                    <span className="text-sm text-zinc-500" aria-hidden>
-                      {isFa ? "←" : "→"}
-                    </span>
-                  </motion.a>
-                ))}
+                {navLinks.map((link, idx) => {
+                  const isAllWork = link.id === "all-work";
+                  const isProjectsSec = link.id === "work";
+                  const isActive = isAllWork
+                    ? pathname.startsWith("/projects")
+                    : pathname === "/" &&
+                      (activeSection === link.id ||
+                        (isProjectsSec &&
+                          (activeSection === "work" || activeSection === "projects")));
+
+                  return (
+                    <motion.a
+                      key={link.id}
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      initial={{ opacity: 0, x: isFa ? 12 : -12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.04, duration: 0.25 }}
+                      aria-current={isActive ? "page" : undefined}
+                      className={cn(
+                        "flex min-h-[52px] items-center justify-between rounded-xl px-4 py-3.5 text-base font-medium transition",
+                        isActive
+                          ? "bg-sky-500/15 text-sky-300 font-semibold ring-1 ring-sky-400/30 shadow-[0_0_12px_rgba(56,189,248,0.15)]"
+                          : "text-zinc-200 hover:bg-white/5 hover:text-white active:bg-white/10",
+                      )}
+                    >
+                      <span className="flex items-center gap-2.5">
+                        {isActive && (
+                          <span className="h-1.5 w-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,1)]" />
+                        )}
+                        <span>{isFa ? link.labelFa : link.label}</span>
+                      </span>
+                      <span className={cn("text-sm", isActive ? "text-sky-400" : "text-zinc-500")} aria-hidden>
+                        {isFa ? "←" : "→"}
+                      </span>
+                    </motion.a>
+                  );
+                })}
               </nav>
             </div>
 
