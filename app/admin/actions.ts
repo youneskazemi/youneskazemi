@@ -11,6 +11,7 @@ import {
   deleteProject,
   insertProject,
   ProjectRecord,
+  reorderProject,
   updateProject,
 } from "@/lib/db/projects";
 
@@ -80,6 +81,19 @@ export async function saveProjectAction(
     .map((s) => s.trim())
     .filter(Boolean);
 
+  const galleryRaw = (formData.get("gallery") as string) || "";
+  let gallery: string[] = [];
+  try {
+    if (galleryRaw.startsWith("[")) {
+      const parsed = JSON.parse(galleryRaw);
+      gallery = Array.isArray(parsed) ? parsed : [];
+    } else {
+      gallery = galleryRaw.split("\n").map((s) => s.trim()).filter(Boolean);
+    }
+  } catch {
+    gallery = galleryRaw.split("\n").map((s) => s.trim()).filter(Boolean);
+  }
+
   const projectPayload: Partial<ProjectRecord> = {
     title,
     titleFa,
@@ -94,6 +108,7 @@ export async function saveProjectAction(
     year,
     tags,
     stack,
+    gallery,
     featured,
     offline,
     published,
@@ -143,6 +158,7 @@ export async function toggleFeaturedAction(id: string, currentFeatured: boolean)
   revalidatePath("/");
   revalidatePath("/projects");
   revalidatePath("/admin");
+  redirect("/admin");
 }
 
 export async function togglePublishedAction(id: string, currentPublished: boolean) {
@@ -153,4 +169,17 @@ export async function togglePublishedAction(id: string, currentPublished: boolea
   revalidatePath("/");
   revalidatePath("/projects");
   revalidatePath("/admin");
+  redirect("/admin");
 }
+
+export async function reorderProjectAction(id: string, direction: "up" | "down") {
+  const isAdmin = await checkIsAdmin();
+  if (!isAdmin) throw new Error("Unauthorized");
+
+  await reorderProject(id, direction);
+  revalidatePath("/");
+  revalidatePath("/projects");
+  revalidatePath("/admin");
+  redirect("/admin");
+}
+

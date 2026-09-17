@@ -2,6 +2,7 @@
 
 import type { Project } from "@/content/projects";
 import { useI18n } from "@/lib/i18n";
+import { ProjectGallery } from "@/components/ProjectGallery";
 
 export function ProjectDetailContent({ project }: { project: Project }) {
   const { t, isFa } = useI18n();
@@ -43,6 +44,15 @@ export function ProjectDetailContent({ project }: { project: Project }) {
           ))}
         </ul>
       </div>
+
+      {project.gallery && project.gallery.length > 0 && (
+        <ProjectGallery
+          gallery={project.gallery}
+          title={project.title}
+          titleFa={project.titleFa}
+          accent={project.accent}
+        />
+      )}
 
       {/* Offline projects keep the case study but must not dead-end (PRODUCT.md #5) */}
       {project.offline ? (

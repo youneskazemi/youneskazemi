@@ -11,7 +11,7 @@ import { Navbar } from "@/components/Navbar";
 import { useI18n } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
 
-const FILTERS = [
+const BASE_FILTERS = [
   { id: "all", label: "All", labelFa: "همه" },
   { id: "store", label: "Store", labelFa: "فروشگاه", match: /Store|Woo|Shop|Beauty|Fitness|Lifestyle/i },
   { id: "custom", label: "Custom / AI", labelFa: "اختصاصی / AI", match: /Custom|AI|SaaS|EdTech|Platform/i },
@@ -22,10 +22,31 @@ const FILTERS = [
 
 function matchesFilter(p: Project, filterId: string) {
   if (filterId === "all") return true;
-  const f = FILTERS.find((x) => x.id === filterId);
-  if (!f || !("match" in f) || !f.match) return true;
-  const hay = [...p.tags, ...p.stack].join(" ");
-  return f.match.test(hay);
+  const f = BASE_FILTERS.find((x) => x.id === filterId);
+  if (f && "match" in f && f.match) {
+    const hay = [...p.tags, ...p.stack].join(" ");
+    return f.match.test(hay);
+  }
+  // Check direct tag match for custom tags
+  return p.tags.some((tag) => tag.toLowerCase() === filterId.toLowerCase());
+}
+
+function matchesSearch(p: Project, q: string) {
+  if (!q) return true;
+  const query = q.toLowerCase().trim();
+  const searchCorpus = [
+    p.title,
+    p.titleFa,
+    p.summary,
+    p.summaryFa,
+    p.slug,
+    ...(p.tags || []),
+    ...(p.stack || []),
+  ]
+    .join(" ")
+    .toLowerCase();
+
+  return searchCorpus.includes(query);
 }
 
 function ProjectTile({
@@ -118,16 +139,44 @@ function ProjectTile({
 export function ProjectsIndex({ initialProjects }: { initialProjects?: Project[] } = {}) {
   const { t, isFa } = useI18n();
   const [filter, setFilter] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const reduce = useReducedMotion();
 
   const catalog = useMemo(
     () => initialProjects ?? getOrderedProjects(),
     [initialProjects]
   );
-  const filtered = useMemo(
-    () => catalog.filter((p) => matchesFilter(p, filter)),
-    [catalog, filter],
-  );
+
+  // Dynamic tags from database/catalog that aren't already represented in base filters
+  const extraTags = useMemo(() => {
+    const counts: Record<string, number> = {};
+    for (const p of catalog) {
+      for (const tag of p.tags || []) {
+        counts[tag] = (counts[tag] || 0) + 1;
+      }
+    }
+    // Only return popular custom tags (at least 1 project)
+    return Object.keys(counts)
+      .filter((tag) => !BASE_FILTERS.some((b) => b.label.toLowerCase() === tag.toLowerCase()))
+      .slice(0, 4);
+  }, [catalog]);
+
+  const allFilters = useMemo(() => {
+    return [
+      ...BASE_FILTERS,
+      ...extraTags.map((tag) => ({
+        id: tag.toLowerCase(),
+        label: tag,
+        labelFa: tag,
+      })),
+    ];
+  }, [extraTags]);
+
+  const filtered = useMemo(() => {
+    return catalog.filter(
+      (p) => matchesFilter(p, filter) && matchesSearch(p, searchQuery)
+    );
+  }, [catalog, filter, searchQuery]);
 
   return (
     <>
@@ -136,7 +185,7 @@ export function ProjectsIndex({ initialProjects }: { initialProjects?: Project[]
       <main className="flex-1 pt-24">
         <div className="mx-auto max-w-6xl px-5 pb-24 sm:px-6">
           <motion.header
-            className="max-w-2xl pb-10 pt-6 sm:pb-12"
+            className="max-w-2xl pb-8 pt-6 sm:pb-10"
             initial={reduce ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
@@ -152,33 +201,75 @@ export function ProjectsIndex({ initialProjects }: { initialProjects?: Project[]
             </p>
           </motion.header>
 
-          <div
-            className="mb-10 flex flex-wrap gap-2"
-            role="tablist"
-            aria-label={isFa ? "فیلتر پروژه‌ها" : "Filter projects"}
-          >
-            {FILTERS.map((f) => {
-              const active = filter === f.id;
-              return (
+          {/* Controls: Search + Filter Pills */}
+          <div className="mb-10 space-y-4">
+            {/* Search Input */}
+            <div className="relative max-w-md">
+              <div className="pointer-events-none absolute inset-y-0 left-3.5 flex items-center text-zinc-500" aria-hidden>
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={t.searchPlaceholder}
+                className="w-full rounded-full border border-white/10 bg-white/[0.03] py-2.5 pl-10 pr-10 text-sm text-zinc-100 placeholder-zinc-500 outline-none transition focus:border-sky-400 focus:bg-white/[0.05] focus:ring-1 focus:ring-sky-400"
+              />
+              {searchQuery && (
                 <button
-                  key={f.id}
                   type="button"
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => setFilter(f.id)}
-                  className={cn(
-                    "inline-flex h-11 items-center rounded-full px-4 text-sm font-medium transition",
-                    active
-                      ? "bg-sky-400 text-black"
-                      : "border border-white/10 bg-white/[0.03] text-zinc-400 hover:border-white/20 hover:text-zinc-200",
-                  )}
+                  onClick={() => setSearchQuery("")}
+                  className="absolute inset-y-0 right-3.5 flex items-center text-xs text-zinc-500 hover:text-zinc-300"
+                  aria-label="Clear search query"
                 >
-                  {isFa ? f.labelFa : f.label}
+                  ✕
                 </button>
-              );
-            })}
+              )}
+            </div>
+
+            {/* Filter Pills with real counts */}
+            <div
+              className="flex flex-wrap gap-2"
+              role="tablist"
+              aria-label={isFa ? "فیلتر پروژه‌ها" : "Filter projects"}
+            >
+              {allFilters.map((f) => {
+                const active = filter === f.id;
+                const count = catalog.filter((p) => matchesFilter(p, f.id)).length;
+                if (count === 0 && f.id !== "all") return null;
+
+                return (
+                  <button
+                    key={f.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={active}
+                    onClick={() => setFilter(f.id)}
+                    className={cn(
+                      "inline-flex h-10 items-center gap-1.5 rounded-full px-3.5 text-xs font-medium transition",
+                      active
+                        ? "bg-sky-400 text-black shadow-md shadow-sky-400/20"
+                        : "border border-white/10 bg-white/[0.03] text-zinc-400 hover:border-white/20 hover:text-zinc-200",
+                    )}
+                  >
+                    <span>{isFa ? f.labelFa : f.label}</span>
+                    <span
+                      className={cn(
+                        "rounded-full px-1.5 py-0.2 text-[10px] font-mono",
+                        active ? "bg-black/20 text-black font-bold" : "bg-white/5 text-zinc-500"
+                      )}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
+          {/* Projects Grid */}
           <div className="grid gap-10 sm:gap-8 md:grid-cols-2">
             {filtered.map((project, i) => (
               <ProjectTile
@@ -189,10 +280,23 @@ export function ProjectsIndex({ initialProjects }: { initialProjects?: Project[]
             ))}
           </div>
 
+          {/* Empty State */}
           {filtered.length === 0 && (
-            <p className="py-16 text-center text-zinc-500">
-              {isFa ? "پروژه‌ای در این دسته نیست." : "No projects in this filter."}
-            </p>
+            <div className="rounded-2xl border border-white/5 bg-white/[0.02] py-16 text-center">
+              <p className="text-sm text-zinc-400">
+                {t.noProjectsFound}
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setFilter("all");
+                  setSearchQuery("");
+                }}
+                className="mt-4 inline-flex items-center gap-1 rounded-full border border-sky-400/30 bg-sky-400/10 px-4 py-2 text-xs font-medium text-sky-300 transition hover:bg-sky-400/20"
+              >
+                {t.clearSearch}
+              </button>
+            </div>
           )}
 
           <div className="mt-16">

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProjectBySlug, getProjects } from "@/lib/db/projects";
+import { BrowserFrame } from "@/components/BrowserFrame";
 import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
 import { Navbar } from "@/components/Navbar";
@@ -39,17 +40,19 @@ export default async function ProjectPage({ params }: Props) {
       <Navbar />
       <main className="flex-1 pt-24">
         <div className="mx-auto max-w-4xl px-5 pb-20 sm:px-6">
-          <div className="relative mb-8 overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/40">
-            <div className="relative aspect-[16/10]">
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                className="object-cover object-top"
-                priority
-                sizes="(max-width: 896px) 100vw, 896px"
-              />
-            </div>
+          <div className="mb-8">
+            <BrowserFrame url={project.href}>
+              <div className="relative aspect-[16/10] overflow-hidden bg-zinc-950">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  className="object-cover object-top"
+                  priority
+                  sizes="(max-width: 896px) 100vw, 896px"
+                />
+              </div>
+            </BrowserFrame>
           </div>
           <ProjectDetailContent project={project} />
           <div className="mt-10 flex flex-wrap gap-4">

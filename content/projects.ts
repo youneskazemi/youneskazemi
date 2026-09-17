@@ -16,6 +16,8 @@ export type Project = {
   year?: string;
   /** Domain no longer resolves — keep the case study, drop the outbound link. */
   offline?: boolean;
+  /** Multi-screenshot gallery URLs for case studies. */
+  gallery?: string[];
 };
 
 /**

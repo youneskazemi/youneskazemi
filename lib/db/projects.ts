@@ -35,6 +35,7 @@ function mapRowToProject(row: any): ProjectRecord {
     bodyFa: row.body_fa ?? row.bodyFa ?? "",
     year: row.year ?? "2025",
     offline: Boolean(row.offline),
+    gallery: Array.isArray(row.gallery) ? row.gallery : [],
     display_order: Number(row.display_order ?? 0),
     published: row.published !== false,
     created_at: row.created_at ?? new Date().toISOString(),
@@ -136,6 +137,7 @@ export async function insertProject(project: Partial<ProjectRecord>): Promise<{ 
     body_fa: project.bodyFa ?? "",
     year: project.year ?? "2025",
     offline: Boolean(project.offline),
+    gallery: project.gallery ?? [],
     display_order: project.display_order ?? 0,
     published: project.published !== false,
   };
@@ -182,6 +184,7 @@ export async function updateProject(
   if (project.bodyFa !== undefined) row.body_fa = project.bodyFa;
   if (project.year !== undefined) row.year = project.year;
   if (project.offline !== undefined) row.offline = project.offline;
+  if (project.gallery !== undefined) row.gallery = project.gallery;
   if (project.display_order !== undefined) row.display_order = project.display_order;
   if (project.published !== undefined) row.published = project.published;
 
@@ -208,6 +211,54 @@ export async function deleteProject(id: string): Promise<{ error: string | null 
 
   const { error } = await supabase.from("projects").delete().eq("id", id);
   return { error: error ? error.message : null };
+}
+
+/** Reorder a project up or down. */
+export async function reorderProject(
+  id: string,
+  direction: "up" | "down"
+): Promise<{ success: boolean; error?: string }> {
+  const supabase = getAdminSupabase();
+  if (!supabase) {
+    return { success: false, error: "Database connection not configured." };
+  }
+
+  const { data: projects, error } = await supabase
+    .from("projects")
+    .select("id, display_order")
+    .order("display_order", { ascending: true })
+    .order("created_at", { ascending: false });
+
+  if (error || !projects || projects.length === 0) {
+    return { success: false, error: error?.message || "Could not fetch projects" };
+  }
+
+  const currentIndex = projects.findIndex((p) => p.id === id);
+  if (currentIndex === -1) {
+    return { success: false, error: "Project not found" };
+  }
+
+  const targetIndex = direction === "up" ? currentIndex - 1 : currentIndex + 1;
+  if (targetIndex < 0 || targetIndex >= projects.length) {
+    return { success: true }; // At boundary, already in place
+  }
+
+  const current = projects[currentIndex];
+  const target = projects[targetIndex];
+
+  // If display_order values are identical, assign unique indexes
+  let currentOrder = current.display_order;
+  let targetOrder = target.display_order;
+  if (currentOrder === targetOrder) {
+    currentOrder = currentIndex;
+    targetOrder = targetIndex;
+  }
+
+  // Swap display_orders
+  await supabase.from("projects").update({ display_order: targetOrder }).eq("id", current.id);
+  await supabase.from("projects").update({ display_order: currentOrder }).eq("id", target.id);
+
+  return { success: true };
 }
 
 /** Upload an image to the showcases storage bucket. */
@@ -243,6 +294,7 @@ function getFallbackProjectRecords(): ProjectRecord[] {
   return fallbackProjects.map((p, idx) => ({
     ...p,
     id: `fallback-${p.slug}`,
+    gallery: p.gallery ?? [],
     display_order: idx,
     published: true,
     created_at: new Date().toISOString(),
@@ -256,6 +308,7 @@ function getFallbackProjectBySlug(slug: string): ProjectRecord | null {
   return {
     ...p,
     id: `fallback-${p.slug}`,
+    gallery: p.gallery ?? [],
     display_order: 0,
     published: true,
     created_at: new Date().toISOString(),

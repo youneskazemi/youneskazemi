@@ -27,6 +27,12 @@ export function ProjectForm({ initialData }: Props) {
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [accent, setAccent] = useState(initialData?.accent || "#38bdf8");
 
+  // Multi-screenshot gallery states
+  const [gallery, setGallery] = useState<string[]>(initialData?.gallery || []);
+  const [isGalleryUploading, setIsGalleryUploading] = useState(false);
+  const [galleryError, setGalleryError] = useState<string | null>(null);
+  const [directGalleryUrl, setDirectGalleryUrl] = useState("");
+
   async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -55,10 +61,63 @@ export function ProjectForm({ initialData }: Props) {
     }
   }
 
+  async function handleGalleryUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setIsGalleryUploading(true);
+    setGalleryError(null);
+
+    try {
+      const uploaded: string[] = [];
+      for (let i = 0; i < files.length; i++) {
+        const formData = new FormData();
+        formData.append("file", files[i]);
+        const res = await fetch("/api/admin/upload", {
+          method: "POST",
+          body: formData,
+        });
+        const data = await res.json();
+        if (res.ok && data.url) {
+          uploaded.push(data.url);
+        }
+      }
+      setGallery((prev) => [...prev, ...uploaded]);
+    } catch {
+      setGalleryError("Failed to upload gallery images");
+    } finally {
+      setIsGalleryUploading(false);
+      e.target.value = "";
+    }
+  }
+
+  function addDirectGalleryUrl() {
+    if (!directGalleryUrl.trim()) return;
+    setGallery((prev) => [...prev, directGalleryUrl.trim()]);
+    setDirectGalleryUrl("");
+  }
+
+  function removeGalleryItem(index: number) {
+    setGallery((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  function moveGalleryItem(index: number, direction: "left" | "right") {
+    setGallery((prev) => {
+      const next = [...prev];
+      const target = direction === "left" ? index - 1 : index + 1;
+      if (target < 0 || target >= next.length) return prev;
+      const temp = next[index];
+      next[index] = next[target];
+      next[target] = temp;
+      return next;
+    });
+  }
+
   return (
     <form action={formAction} className="space-y-8">
       {initialData?.id && <input type="hidden" name="id" value={initialData.id} />}
       <input type="hidden" name="image" value={imageUrl} />
+      <input type="hidden" name="gallery" value={JSON.stringify(gallery)} />
 
       {state?.error && (
         <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-400">
@@ -127,6 +186,121 @@ export function ProjectForm({ initialData }: Props) {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Case Study Gallery Section */}
+      <div className="rounded-2xl border border-white/10 bg-[#0c0c12] p-6">
+        <div className="flex items-center justify-between mb-1">
+          <h2 className="text-sm font-semibold text-white">Case Study Gallery (Multi-Screenshot)</h2>
+          <span className="text-xs font-mono text-zinc-500">{gallery.length} screens</span>
+        </div>
+        <p className="text-xs text-zinc-400 mb-4">
+          Upload additional screenshots (mobile view, responsive screens, dashboard, detail flows) to display in the interactive case study gallery.
+        </p>
+
+        {/* Gallery Upload & URL Input */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start mb-6">
+          <div>
+            <label className="block rounded-xl border-2 border-dashed border-white/15 bg-white/[0.02] p-5 text-center cursor-pointer transition hover:border-sky-500/50 hover:bg-white/[0.04]">
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleGalleryUpload}
+                disabled={isGalleryUploading}
+                className="hidden"
+              />
+              <span className="block text-xl mb-1">📸</span>
+              <span className="block text-xs font-semibold text-white">
+                {isGalleryUploading ? "Uploading gallery images..." : "+ Upload Screenshots (Select multiple)"}
+              </span>
+              <span className="block text-[11px] text-zinc-500 mt-0.5">
+                PNG, JPG, WebP
+              </span>
+            </label>
+            {galleryError && (
+              <p className="mt-2 text-xs text-red-400">{galleryError}</p>
+            )}
+          </div>
+
+          <div className="flex flex-col justify-between h-full">
+            <div>
+              <label className="block text-xs text-zinc-400 mb-1">Or add image by URL</label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={directGalleryUrl}
+                  onChange={(e) => setDirectGalleryUrl(e.target.value)}
+                  placeholder="https://... or /projects/covers/..."
+                  className="flex-1 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs text-white placeholder-zinc-600 outline-none focus:border-sky-500"
+                />
+                <button
+                  type="button"
+                  onClick={addDirectGalleryUrl}
+                  className="rounded-lg bg-white/10 px-3 py-2 text-xs font-medium text-white hover:bg-white/20 transition cursor-pointer"
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Gallery Previews / Reordering Strip */}
+        {gallery.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 pt-2">
+            {gallery.map((url, idx) => (
+              <div
+                key={url + idx}
+                className="group relative overflow-hidden rounded-xl border border-white/10 bg-zinc-950 aspect-[16/10]"
+              >
+                <Image
+                  src={url}
+                  alt={`Screenshot ${idx + 1}`}
+                  fill
+                  className="object-cover object-top"
+                  sizes="180px"
+                />
+                <div className="absolute top-1.5 left-1.5 rounded bg-black/70 px-1.5 py-0.5 text-[10px] font-mono text-zinc-300">
+                  #{idx + 1}
+                </div>
+                {/* Actions Overlay */}
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => moveGalleryItem(idx, "left")}
+                    disabled={idx === 0}
+                    className="flex h-7 w-7 items-center justify-center rounded-md bg-white/20 text-white hover:bg-white/40 disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed"
+                    title="Move left"
+                  >
+                    ←
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => moveGalleryItem(idx, "right")}
+                    disabled={idx === gallery.length - 1}
+                    className="flex h-7 w-7 items-center justify-center rounded-md bg-white/20 text-white hover:bg-white/40 disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed"
+                    title="Move right"
+                  >
+                    →
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => removeGalleryItem(idx)}
+                    className="flex h-7 w-7 items-center justify-center rounded-md bg-red-500/80 text-white hover:bg-red-600 cursor-pointer"
+                    title="Remove image"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-center py-4 text-xs text-zinc-600">
+            No gallery screenshots added yet.
+          </p>
+        )}
       </div>
 
       {/* Bilingual Content: Side-by-side or stacked */}

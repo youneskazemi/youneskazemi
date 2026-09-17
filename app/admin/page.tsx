@@ -3,10 +3,12 @@ import Image from "next/image";
 import { getAllAdminProjects } from "@/lib/db/projects";
 import {
   deleteProjectAction,
+  reorderProjectAction,
   toggleFeaturedAction,
   togglePublishedAction,
 } from "./actions";
 
+export const dynamic = "force-dynamic";
 export const revalidate = 0; // Always fresh in admin
 
 export default async function AdminDashboardPage() {
@@ -21,12 +23,12 @@ export default async function AdminDashboardPage() {
             Showcase Projects
           </h1>
           <p className="mt-1 text-xs text-zinc-400">
-            Manage your portfolio case studies, reorder items, and publish live client work.
+            Manage your portfolio case studies, reorder items with 1-click, and publish live client work.
           </p>
         </div>
         <Link
           href="/admin/projects/new"
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-500 px-4 py-2.5 text-xs font-semibold text-zinc-950 transition hover:bg-sky-400 shadow-lg shadow-sky-500/20"
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-500 px-4 py-2.5 text-xs font-semibold text-zinc-950 transition hover:bg-sky-400 shadow-lg shadow-sky-500/20 cursor-pointer"
         >
           <span className="text-base leading-none">+</span>
           <span>Add New Showcase</span>
@@ -47,13 +49,40 @@ export default async function AdminDashboardPage() {
           </div>
         ) : (
           <div className="divide-y divide-white/5">
-            {projects.map((project) => (
+            {projects.map((project, idx) => (
               <div
                 key={project.id}
                 className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between transition hover:bg-white/[0.02]"
               >
-                {/* Left: Thumbnail & Titles */}
+                {/* Left: Reordering + Thumbnail & Titles */}
                 <div className="flex items-center gap-4 min-w-0">
+                  {/* Reorder Up/Down arrows */}
+                  <div className="flex flex-col items-center gap-0.5 shrink-0">
+                    <form action={reorderProjectAction.bind(null, project.id, "up")}>
+                      <button
+                        type="submit"
+                        disabled={idx === 0}
+                        title="Move showcase up"
+                        className="flex h-5 w-5 items-center justify-center rounded border border-white/10 bg-white/5 text-[9px] text-zinc-400 hover:bg-white/15 hover:text-white disabled:opacity-20 cursor-pointer disabled:cursor-not-allowed transition"
+                      >
+                        ▲
+                      </button>
+                    </form>
+                    <span className="font-mono text-[10px] text-zinc-500 font-bold leading-none py-0.5">
+                      #{idx + 1}
+                    </span>
+                    <form action={reorderProjectAction.bind(null, project.id, "down")}>
+                      <button
+                        type="submit"
+                        disabled={idx === projects.length - 1}
+                        title="Move showcase down"
+                        className="flex h-5 w-5 items-center justify-center rounded border border-white/10 bg-white/5 text-[9px] text-zinc-400 hover:bg-white/15 hover:text-white disabled:opacity-20 cursor-pointer disabled:cursor-not-allowed transition"
+                      >
+                        ▼
+                      </button>
+                    </form>
+                  </div>
+
                   <div className="relative h-16 w-24 flex-shrink-0 overflow-hidden rounded-lg border border-white/10 bg-zinc-900">
                     {project.image ? (
                       <Image
@@ -87,6 +116,14 @@ export default async function AdminDashboardPage() {
                       </span>
                       <span>·</span>
                       <span>{project.year || "2025"}</span>
+                      {project.gallery && project.gallery.length > 0 && (
+                        <>
+                          <span>·</span>
+                          <span className="rounded bg-sky-500/10 px-1.5 py-0.2 text-[10px] font-mono text-sky-400 border border-sky-500/20">
+                            📸 {project.gallery.length} screens
+                          </span>
+                        </>
+                      )}
                       {project.tags.length > 0 && (
                         <>
                           <span>·</span>
@@ -142,6 +179,16 @@ export default async function AdminDashboardPage() {
                       {project.published ? "● Live" : "○ Draft"}
                     </button>
                   </form>
+
+                  {/* View Live Case Study */}
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    target="_blank"
+                    className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs font-medium text-zinc-400 transition hover:bg-white/10 hover:text-white"
+                    title="View public case study"
+                  >
+                    View ↗
+                  </Link>
 
                   {/* Edit button */}
                   <Link
