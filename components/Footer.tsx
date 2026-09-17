@@ -11,7 +11,7 @@ export function Footer() {
 
   return (
     <footer className="border-t border-white/8 bg-black/40">
-      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-5 py-12 sm:px-6 md:flex-row md:items-start md:justify-between">
+      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-5 py-12 pb-28 sm:px-6 md:pb-12 md:flex-row md:items-start md:justify-between">
         <div>
           <Logo showWordmark wordmark={brand} />
           <p className="mt-3 max-w-sm text-sm leading-relaxed text-zinc-400">

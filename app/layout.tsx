@@ -34,6 +34,8 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
+import { MobileBottomBar } from "@/components/MobileBottomBar";
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
@@ -117,7 +119,7 @@ export const metadata: Metadata = {
       { url: "/favicon.ico", sizes: "any" },
       { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
       { url: "/favicon-16.png", type: "image/png", sizes: "16x16" },
-      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
     ],
     shortcut: ["/favicon.ico"],
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
@@ -142,7 +144,10 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground">
         <JsonLd data={siteJsonLd()} />
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <MobileBottomBar />
+        </Providers>
       </body>
     </html>
   );
