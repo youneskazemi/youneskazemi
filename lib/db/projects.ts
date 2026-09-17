@@ -36,6 +36,9 @@ function mapRowToProject(row: any): ProjectRecord {
     year: row.year ?? "2025",
     offline: Boolean(row.offline),
     gallery: Array.isArray(row.gallery) ? row.gallery : [],
+    metrics: Array.isArray(row.metrics)
+      ? row.metrics
+      : fallbackProjects.find((p) => p.slug === row.slug)?.metrics ?? [],
     display_order: Number(row.display_order ?? 0),
     published: row.published !== false,
     created_at: row.created_at ?? new Date().toISOString(),

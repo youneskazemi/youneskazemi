@@ -18,6 +18,8 @@ export type Project = {
   offline?: boolean;
   /** Multi-screenshot gallery URLs for case studies. */
   gallery?: string[];
+  /** High-impact proof highlights / badges. */
+  metrics?: { label: string; labelFa: string }[];
 };
 
 /**
@@ -40,6 +42,12 @@ export const projects: Project[] = [
     accent: "#10b981",
     stack: ["Next.js", "React", "Web Audio API", "Conversational AI"],
     year: "2026",
+    metrics: [
+      { label: "AI Voice Examiner", labelFa: "مصاحبه‌گر صوتی زنده" },
+      { label: "4-Skill Full Mock", labelFa: "شبیه‌سازی ۴ مهارت" },
+      { label: "Instant Scoring", labelFa: "کارنامه تشخیصی آنی" },
+    ],
+    gallery: ["/projects/covers/latorin.jpg"],
     body: "Latorin (latorin.ir) is a full-featured AI-driven IELTS training product: users engage in real-time conversational speaking practice with an intelligent virtual examiner, take Full Mock exams covering Speaking, Reading, Listening, and Writing under authentic timed conditions, and receive instant rubric-aligned band scores with pinpoint feedback.",
     bodyFa:
       "لاتورین (latorin.ir) پلتفرم تخصصی مبتنی بر هوش مصنوعی برای داوطلبان آیلتس است: امکان گفت‌وگوی زنده صوتی با مصاحبه‌گر هوشمند، شبیه‌سازی آزمون فول ماک هر چهار مهارت (Speaking، Reading، Listening، Writing) در شرایط استاندارد آزمون، و دریافت نمره دقیق بند اسکور همراه با تحلیل نقاط ضعف و راهکار بهبود.",
@@ -59,6 +67,16 @@ export const projects: Project[] = [
     accent: "#e11d48",
     stack: ["Next.js", "PWA / Webmanifest", "TypeScript", "Tailwind CSS"],
     year: "2026",
+    metrics: [
+      { label: "PWA Web App", labelFa: "وب‌اپلیکیشن PWA" },
+      { label: "Crocin 268+ Tested", labelFa: "عیار کروسین ۲۶۸+" },
+      { label: "100% Direct Farm", labelFa: "۱۰۰٪ مستقیم از مزرعه" },
+    ],
+    gallery: [
+      "/projects/covers/sorkhdan.jpg",
+      "/projects/gallery/sorkhdan-features.jpg",
+      "/projects/gallery/sorkhdan-mobile.jpg",
+    ],
     body: "Sorkhdan (sorkhdan.ir) is a high-performance Progressive Web Application (PWA) delivering authentic Qaenat saffron and Birjand barberry directly from farmers to households. Built with Next.js App Router and a rich PWA architecture, it features instant mobile homescreen installation, web push order notifications, lab testing certification (Crocin 268+), an interactive saffron dosage calculator, ice-shock brewing interactive guide, and ultra-fast frictionless checkout with complete parcel tracking.",
     bodyFa:
       "سرخدان (sorkhdan.ir) یک وب‌اپلیکیشن پیش‌رونده (PWA) با عملکرد فوق‌سریع است که زعفران اصیل قائنات و زرشک پفکی بیرجند را بی‌واسطه از مزرعه به دست مصرف‌کننده می‌رساند. این پروژه با Next.js App Router و معماری مدرن PWA توسعه یافته و شامل قابلیت نصب مستقیم روی صفحه اصلی گوشی، اعلان‌های وب هوشمند وضعیت سفارش، نمایش شناسنامه آزمایشگاهی با عیار کروسین ۲۶۸+، ابزار تعاملی محاسبه مقدار مصرف مورد نیاز، راهنمای دم‌آوری با شوک یخ، و فرآیند خرید سریع با رهگیری پستی مرسوله است.",
@@ -78,6 +96,16 @@ export const projects: Project[] = [
     accent: "#ea580c",
     stack: ["Technical SEO", "Semantic Schema", "E-commerce", "Market Price Tool"],
     year: "2026",
+    metrics: [
+      { label: "Top 3 Google HVAC", labelFa: "رتبه‌های برتر گوگل برودت" },
+      { label: "Live Copper Tool", labelFa: "استعلام آنلاین قیمت مس" },
+      { label: "Technical SEO", labelFa: "معماری سئوی فنی" },
+    ],
+    gallery: [
+      "/projects/covers/ekramshop.jpg",
+      "/projects/gallery/ekramshop-calculator.jpg",
+      "/projects/gallery/ekramshop-mobile.jpg",
+    ],
     body: "Ekram Shop (ekramshop.com) is a commercial e-commerce platform specializing in industrial refrigeration equipment, copper pipes, elastomeric insulation, compressors, and refrigerant gases. Younes engineered a data-driven technical SEO strategy: built custom interactive copper pipe price calculators, resolved faceted filter index bloat, implemented granular Schema.org JSON-LD microdata, and created targeted B2B wholesale conversion funnels, resulting in dominant organic SERP rankings across competitive industrial cooling and HVAC queries in Iran.",
     bodyFa:
       "اکرام شاپ (ekramshop.com) یک پلتفرم فروشگاهی و تخصصی در حوزه تجهیزات برودتی، لوله‌های مسی، عایق الاستومری، گازهای مبرد و کمپرسورهای صنعتی است. یونس در این پروژه معماری سئوی فنی (Technical SEO) همه‌جانبه‌ای پیاده‌سازی کرد: توسعه ابزار تعاملی محاسبه آنلاین قیمت لوله مسی و تحلیل روند بازار مس، بهینه‌سازی ساختار دسته‌بندی‌ها و رفع مشکلات کنیبالیزیشن فیلترها، نشانه‌گذاری غنی داده‌های ساختاریافته (Schema.org)، و ایجاد مسیرهای تبدیل سفارش عمده B2B که منجر به کسب جایگاه‌های برتر گوگل در کلمات پرترافیک حوزه برودت و تأسیسات کشور شد.",
@@ -211,6 +239,12 @@ export const projects: Project[] = [
     accent: "#3b82f6",
     stack: ["WordPress", "WooCommerce", "Plan Selector", "Marketing"],
     year: "2026",
+    metrics: [
+      { label: "Custom Coaching", labelFa: "کوچینگ اختصاصی" },
+      { label: "Plan Selector Quiz", labelFa: "پرسشنامه انتخاب پلن" },
+      { label: "WooCommerce Shop", labelFa: "فروشگاه مکمل ورزشی" },
+    ],
+    gallery: ["/projects/covers/jrfit.jpg"],
     body: "JR Fit (jrfit.ir) is a premier fitness and online coaching platform combining tailored workout and nutrition plans with an e-commerce shop for authentic sports supplements. It features a smart quiz guiding users to their ideal coaching tier, high-energy athlete transformation showcases, event registrations, and seamless WooCommerce ordering.",
     bodyFa:
       "جی‌آر فیت (jrfit.ir) پلتفرم جامع تناسب اندام و کوچینگ آنلاین است که برنامه‌های اختصاصی تمرین و تغذیه را با فروشگاه مکمل‌های ورزشی اورجینال ترکیب می‌کند. این وب‌سایت دارای سیستم پرسشنامه هوشمند انتخاب سطح پلن، ویترین نتایج واقعی و تغییرات بدنی اعضا، ثبت‌نام ایونت‌های ورزشی و فرآیند سریع خرید آنلاین است.",

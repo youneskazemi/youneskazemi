@@ -144,7 +144,26 @@ function CaseStudy({
             {summary}
           </p>
 
-          <ul className="mt-6 flex flex-wrap gap-2">
+          {/* Key proof metrics */}
+          {project.metrics && project.metrics.length > 0 && (
+            <div className="mt-5 flex flex-wrap gap-2" aria-label="Key highlights">
+              {project.metrics.map((m) => (
+                <span
+                  key={m.label}
+                  className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-zinc-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]"
+                >
+                  <span
+                    className="h-1.5 w-1.5 rounded-full"
+                    style={{ backgroundColor: project.accent }}
+                    aria-hidden
+                  />
+                  <span>{isFa ? m.labelFa : m.label}</span>
+                </span>
+              ))}
+            </div>
+          )}
+
+          <ul className="mt-5 flex flex-wrap gap-2">
             {project.stack.map((item) => (
               <li
                 key={item}
