@@ -37,6 +37,9 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function ProjectsPage() {
-  return <ProjectsIndex />;
+import { getProjects } from "@/lib/db/projects";
+
+export default async function ProjectsPage() {
+  const projects = await getProjects();
+  return <ProjectsIndex initialProjects={projects} />;
 }

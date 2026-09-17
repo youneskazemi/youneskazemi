@@ -1,6 +1,6 @@
 import { execFileSync } from "node:child_process";
 import type { MetadataRoute } from "next";
-import { projects } from "@/content/projects";
+import { getProjects } from "@/lib/db/projects";
 import { absoluteUrl } from "@/lib/seo";
 
 /**
@@ -23,9 +23,10 @@ function lastCommit(path: string): Date {
   }
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pagesUpdated = lastCommit("app/page.tsx");
   const projectsUpdated = lastCommit("content/projects.ts");
+  const projectsList = await getProjects();
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -42,9 +43,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const projectRoutes: MetadataRoute.Sitemap = projects.map((p) => ({
+  const projectRoutes: MetadataRoute.Sitemap = projectsList.map((p) => ({
     url: absoluteUrl(`/projects/${p.slug}`),
-    lastModified: projectsUpdated,
+    lastModified: p.updated_at ? new Date(p.updated_at) : projectsUpdated,
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));

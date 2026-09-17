@@ -181,10 +181,12 @@ function CaseStudy({
 }
 
 /** Home: N featured case studies only → route to /projects for the rest. */
-export function WorkShowcase() {
+export function WorkShowcase({ projects }: { projects?: Project[] } = {}) {
   const { t } = useI18n();
-  const list = getHomeShowcaseProjects();
-  const total = getOrderedProjects().length;
+  const list = projects
+    ? projects.filter((p) => p.featured).slice(0, 3)
+    : getHomeShowcaseProjects();
+  const total = projects ? projects.length : getOrderedProjects().length;
   const viewAllLabel = t.viewAllWorkCount.replace("{n}", String(total));
 
   return (

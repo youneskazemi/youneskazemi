@@ -29,6 +29,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
-  return <HomePage />;
+import { getProjects } from "@/lib/db/projects";
+
+export default async function Home() {
+  const projects = await getProjects();
+  return <HomePage initialProjects={projects} />;
 }

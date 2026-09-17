@@ -8,7 +8,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { getOrderedProjects } from "@/content/projects";
+import { getOrderedProjects, type Project } from "@/content/projects";
 import { BrowserFrame } from "@/components/BrowserFrame";
 import { useI18n } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
@@ -21,10 +21,10 @@ const AUTOPLAY_MS = 4500;
  * Hero right column: recent projects as a slider (not a full case-study stack).
  * Autoplay pauses on hover / focus; disabled when prefers-reduced-motion.
  */
-export function HeroVisual() {
+export function HeroVisual({ projects }: { projects?: Project[] } = {}) {
   const reduce = useReducedMotion();
   const { isFa, t } = useI18n();
-  const slides = getOrderedProjects().slice(0, HERO_SLIDE_COUNT);
+  const slides = (projects ?? getOrderedProjects()).slice(0, HERO_SLIDE_COUNT);
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const [dir, setDir] = useState(1);

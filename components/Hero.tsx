@@ -11,9 +11,10 @@ import {
 import { useRef } from "react";
 import { HeroVisual } from "@/components/HeroVisual";
 import { site } from "@/content/site";
+import type { Project } from "@/content/projects";
 import { useI18n } from "@/lib/i18n";
 
-export function Hero() {
+export function Hero({ projects }: { projects?: Project[] } = {}) {
   const { t, isFa } = useI18n();
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
@@ -180,7 +181,7 @@ export function Hero() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.65, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
         >
-          <HeroVisual />
+          <HeroVisual projects={projects} />
         </motion.div>
       </motion.div>
 

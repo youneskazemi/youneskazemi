@@ -115,12 +115,15 @@ function ProjectTile({
   );
 }
 
-export function ProjectsIndex() {
+export function ProjectsIndex({ initialProjects }: { initialProjects?: Project[] } = {}) {
   const { t, isFa } = useI18n();
   const [filter, setFilter] = useState("all");
   const reduce = useReducedMotion();
 
-  const catalog = useMemo(() => getOrderedProjects(), []);
+  const catalog = useMemo(
+    () => initialProjects ?? getOrderedProjects(),
+    [initialProjects]
+  );
   const filtered = useMemo(
     () => catalog.filter((p) => matchesFilter(p, filter)),
     [catalog, filter],

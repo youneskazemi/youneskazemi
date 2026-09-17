@@ -47,4 +47,5 @@ portfolio-desktop-hero.png
 
 # windows/cygwin crash dumps
 *.stackdump
+.claude/
 
